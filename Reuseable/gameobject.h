@@ -38,7 +38,6 @@ class GameObject {
         sf::Vector2f GetNormalizeRotationVector();
 
     private:
-        
 };
 
 #endif
