@@ -1,5 +1,5 @@
-#ifndef H_PHYSICPOINT
-#define H_PHYSICPOINT
+#ifndef H_CONSTRAINT
+#define H_CONSTRAINT
 
 #include <SFML/Graphics.hpp>
 
@@ -17,16 +17,16 @@
 #include "../Reuseable/templateclass.h"
 #include "../Reuseable/drawshapes.h"
 
-class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
-    public:
-        bool isStatic = false;
-        float mass = 1;
-        float timeStep;
-        sf::Vector2f currentPosition        = sf::Vector2f(0, 0);
-        sf::Vector2f previousPosition       = sf::Vector2f(0, 0);
-        sf::Vector2f acceleration           = sf::Vector2f(0, 0);
+#include "physicpoint.h"
 
+class AbsoluteConstraint: Monobehaviour<sf::RenderWindow*> {
+    public:
         sf::RenderWindow* window;
+
+        //used vars
+        PhysicPoint* p1;
+        PhysicPoint* p2;
+        float dis;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -34,13 +34,10 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
         void LateUpdate() override;
         void Reset() override;
 
-        PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep);
-        PhysicPoint() {}
-
-        void AddForce(sf::Vector2f force);
+        AbsoluteConstraint(PhysicPoint* p1, PhysicPoint* p2, float dis);
 
     private:
-        void VerletUpdate();
+        float p1MassPortion, p2MassPortion;
 };
 
 #endif
