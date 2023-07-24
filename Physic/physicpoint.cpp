@@ -16,6 +16,8 @@ void PhysicPoint::Update(sf::Event event) {
         auto tmp = this->currentPosition;
         this->currentPosition =  Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep);
         this->previousPosition = tmp;
+
+        this->acceleration = sf::Vector2f(0, 0); //reset acceleration
     }
 }
 
@@ -32,5 +34,5 @@ void PhysicPoint::Reset() {
 }
 
 void PhysicPoint::AddForce(sf::Vector2f force) {
-    this->acceleration += force / this->mass; //F = ma
+    this->acceleration += Math::scaleVec(force, 1.0 / this->mass); //F = ma
 }

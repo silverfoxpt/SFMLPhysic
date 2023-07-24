@@ -21,7 +21,7 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
     public:
         bool isStatic = false;
         float mass = 1;
-        float timeStep;
+        float timeStep = 0.01;
         sf::Vector2f currentPosition        = sf::Vector2f(0, 0);
         sf::Vector2f previousPosition       = sf::Vector2f(0, 0);
         sf::Vector2f acceleration           = sf::Vector2f(0, 0);

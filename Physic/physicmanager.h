@@ -35,8 +35,14 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void LateUpdate() override;
         void Reset() override;
 
+        PhysicPoint* getPoint(int idx) {
+            if (idx < 0 || idx >= (int) this->points.size()) {std::cout << "Point not found!"; return nullptr;}
+            return &this->points[idx];
+        }
+
     private:
         void TestInitialize();
+        void TestUpdate();
 };
 
 
