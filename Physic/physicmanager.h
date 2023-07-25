@@ -19,17 +19,22 @@
 
 #include "physicpoint.h"
 #include "constraint.h"
+#include "springconstraint.h"
 
 class PhysicManager: Monobehaviour<sf::RenderWindow*> {
     public:
         sf::RenderWindow* window;
 
         //used vars
-        float timeStep = 0.01;
-        int substep = 10;
+        float timeStep = 0.00001;
+        int substep = 30;
+
+        float dragCoefficient = 0.001;
+        float gravityCoefficient = 9.81;
 
         std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
+        std::vector<SpringConstraint> springs;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -45,6 +50,10 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
     private:
         void TestInitialize();
         void TestUpdate();
+
+        void AddForceByInput(sf::Event event);
+        void AddForceAirResistance();
+        void AddForceGravity();
 };
 
 

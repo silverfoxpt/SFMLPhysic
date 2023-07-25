@@ -18,6 +18,9 @@ void PhysicPoint::Update(sf::Event event) {
         this->previousPosition = tmp;
 
         this->acceleration = sf::Vector2f(0, 0); //reset acceleration
+
+        // Update the velocity
+        this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep;
     }
 }
 
