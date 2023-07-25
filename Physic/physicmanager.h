@@ -26,6 +26,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         float timeStep = 0.01;
+        int substep = 10;
+
         std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
 
