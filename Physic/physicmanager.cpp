@@ -9,8 +9,8 @@ void PhysicManager::Initialize(sf::RenderWindow* window) {
 void PhysicManager::Update(sf::Event event) {
     this->TestUpdate();
     this->AddForceByInput(event);
-    //this->AddForceAirResistance();
     this->AddForceGravity();
+    this->AddForceAirResistance();
 
     for (auto& point: this->points) {
         point.Update(event);
@@ -95,7 +95,9 @@ void PhysicManager::TestUpdate() {
 
 void PhysicManager::AddForceAirResistance() {
     for (auto& point: this->points) {
-        point.AddForce(Math::scaleVec(point.velocity, -this->dragCoefficient));
+        float len = Math::Length(point.velocity);
+        auto p = Math::scaleVec(Math::normalizeVec(point.velocity), -this->dampingCoefficient * len * len); //debug this tomorrow
+        //point.AddForce();
     }
 }
 

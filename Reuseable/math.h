@@ -72,7 +72,7 @@ class Math {
         }
 
         static sf::Vector2f scaleVec(sf::Vector2f vec, float factor) {
-            return vec * factor;
+            return sf::Vector2f(vec.x * factor, vec.y * factor);
         }
 
         static sf::Vector2f normalizeVec(sf::Vector2f vec) {
