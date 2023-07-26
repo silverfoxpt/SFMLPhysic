@@ -33,6 +33,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         float dampingCoefficient = 0.0001;
         float gravityCoefficient = 9.81;
 
+        float groundHeightValue = -700;
+
         std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
         std::vector<SpringConstraint> springs;
@@ -52,11 +54,14 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
 
     private:
         void TestInitialize();
-        void TestUpdate();
+        void TestSpringSystem();
 
+        void TestUpdate();
+        
         void AddForceByInput(sf::Event event);
         void AddForceAirResistance();
         void AddForceGravity();
+        void AddGroundConstraint();
 };
 
 

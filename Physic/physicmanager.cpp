@@ -4,6 +4,7 @@ void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
 
     this->TestInitialize();
+    this->AddGroundConstraint();
 }
 
 void PhysicManager::Update(sf::Event event) {
@@ -64,6 +65,10 @@ void PhysicManager::Reset() {
 }
 
 void PhysicManager::TestInitialize() {
+    this->TestSpringSystem();
+}
+
+void PhysicManager::TestSpringSystem() {
     PhysicPoint p1 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 400)), this->timeStep);
     p1.Initialize(this->window); 
     p1.isStatic = true;
@@ -111,6 +116,10 @@ void PhysicManager::TestInitialize() {
 }
 
 void PhysicManager::TestUpdate() {
+    
+}
+
+void PhysicManager::AddGroundConstraint() {
     
 }
 
