@@ -35,6 +35,7 @@ class LargerDistanceConstraint: Monobehaviour<sf::RenderWindow*> {
         void Reset() override;
 
         LargerDistanceConstraint(float largerThanDis, PhysicPoint* p1, PhysicPoint* p2);
+        
     private:
         float p1MassPortion, p2MassPortion;
 };
@@ -43,14 +44,21 @@ class SmallerDistanceConstraint: Monobehaviour<sf::RenderWindow*> {
     public:
         sf::RenderWindow* window;
 
+        //used vars
+        float smallerThanDis = 0;
+        PhysicPoint* p1;
+        PhysicPoint* p2;
+
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;
         void Reset() override;
 
+        SmallerDistanceConstraint(float smallerThanDis, PhysicPoint* p1, PhysicPoint* p2);
+
     private:
-        
+        float p1MassPortion, p2MassPortion;
 };
 
 #endif

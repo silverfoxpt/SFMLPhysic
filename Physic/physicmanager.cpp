@@ -25,6 +25,14 @@ void PhysicManager::Update(sf::Event event) {
         for (auto& spring: this->springs) {
             spring.Update(event);
         }
+
+        for (auto& smallConstraint: this->smallConstraints) {
+            smallConstraint.Update(event);
+        }
+
+        for (auto& largeConstraint: this->largeConstraints) {
+            largeConstraint.Update(event);
+        }
     }
 }
 
@@ -49,6 +57,9 @@ void PhysicManager::LateUpdate() {
 void PhysicManager::Reset() {
     this->points.clear();
     this->constraints.clear();
+    this->springs.clear();
+    this->smallConstraints.clear();
+    this->largeConstraints.clear();
 }
 
 void PhysicManager::TestInitialize() {
@@ -88,6 +99,14 @@ void PhysicManager::TestInitialize() {
     SpringConstraint spring2(this->getPoint(1), this->getPoint(2), 70, 0.02);
     spring2.Initialize(this->window);
     this->springs.push_back(spring2);
+
+    /*SmallerDistanceConstraint smallCon(25, this->getPoint(0), this->getPoint(1));
+    smallCon.Initialize(this->window);
+    this->smallConstraints.push_back(smallCon);*/
+
+    /*LargerDistanceConstraint largeCon(100, this->getPoint(0), this->getPoint(1));
+    largeCon.Initialize(this->window);
+    this->largeConstraints.push_back(largeCon);*/
 }
 
 void PhysicManager::TestUpdate() {

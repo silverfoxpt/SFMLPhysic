@@ -20,6 +20,7 @@
 #include "physicpoint.h"
 #include "constraint.h"
 #include "springconstraint.h"
+#include "inequalconstraint.h"
 
 class PhysicManager: Monobehaviour<sf::RenderWindow*> {
     public:
@@ -35,6 +36,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
         std::vector<SpringConstraint> springs;
+        std::vector<SmallerDistanceConstraint> smallConstraints;
+        std::vector<LargerDistanceConstraint> largeConstraints;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
