@@ -29,7 +29,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         float timeStep = 0.00002;
         int substep = 30;
 
-        float dampingCoefficient = 0.00005;
+        float dampingCoefficient = 0.0001;
         float gravityCoefficient = 9.81;
 
         std::vector<PhysicPoint> points;
