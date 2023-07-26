@@ -18,6 +18,7 @@
 #include "../Reuseable/drawshapes.h"
 
 #include "physicpoint.h"
+#include "inequalconstraint.h"
 
 class SpringConstraint: Monobehaviour<sf::RenderWindow*> {
     public:
@@ -28,6 +29,10 @@ class SpringConstraint: Monobehaviour<sf::RenderWindow*> {
         PhysicPoint* p2;
         float normalDis;
         float springCoefficient;
+        float allowedMaxBend;
+
+        LargerDistanceConstraint largeConstraint;
+        SmallerDistanceConstraint smallConstraint;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -35,7 +40,9 @@ class SpringConstraint: Monobehaviour<sf::RenderWindow*> {
         void LateUpdate() override;
         void Reset() override;
 
-        SpringConstraint(PhysicPoint* p1, PhysicPoint* p2, float normalDis, float springCoefficient);
+        void AddSpringForce();
+
+        SpringConstraint(PhysicPoint* p1, PhysicPoint* p2, float normalDis, float springCoefficient, float allowedMaxBend);
 
     private:
         float p1MassPortion, p2MassPortion;

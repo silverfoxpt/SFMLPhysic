@@ -10,6 +10,7 @@ void PhysicManager::Update(sf::Event event) {
     this->TestUpdate();
     this->AddForceByInput(event);
     this->AddForceGravity();
+    for (auto& spring: this->springs) { spring.AddSpringForce(); }
 
     this->AddForceAirResistance(); //always last
 
@@ -92,11 +93,11 @@ void PhysicManager::TestInitialize() {
     cosntraint3.Initialize(this->window);
     this->constraints.push_back(cosntraint3);*/
 
-    SpringConstraint spring(this->getPoint(0), this->getPoint(1), 70, 0.02);
+    SpringConstraint spring(this->getPoint(0), this->getPoint(1), 70, 2, 20);
     spring.Initialize(this->window);
     this->springs.push_back(spring);
 
-    SpringConstraint spring2(this->getPoint(1), this->getPoint(2), 70, 0.02);
+    SpringConstraint spring2(this->getPoint(1), this->getPoint(2), 70, 2, 20);
     spring2.Initialize(this->window);
     this->springs.push_back(spring2);
 
@@ -136,6 +137,18 @@ void PhysicManager::AddForceByInput(sf::Event event) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         for (auto& point: this->points) {
             point.AddForce(sf::Vector2f(-10, 0));
+        }
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        for (auto& point: this->points) {
+            point.AddForce(sf::Vector2f(0, 20));
+        }
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        for (auto& point: this->points) {
+            point.AddForce(sf::Vector2f(0, -20));
         }
     }
 }
