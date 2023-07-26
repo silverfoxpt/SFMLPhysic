@@ -21,6 +21,13 @@ void PhysicPoint::Update(sf::Event event) {
 
         // Update the velocity
         this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep;
+
+        /*this->currentPosition = this->currentPosition 
+            + Math::scaleVec(this->velocity, this->timeStep)
+            + Math::scaleVec(this->acceleration, 0.5 * this->timeStep * this->timeStep);
+        
+        this->velocity += Math::scaleVec(this->acceleration, this->timeStep);
+        this->acceleration = sf::Vector2f(0, 0); //reset acceleration*/
     }
 }
 
@@ -37,5 +44,6 @@ void PhysicPoint::Reset() {
 }
 
 void PhysicPoint::AddForce(sf::Vector2f force) {
-    this->acceleration += Math::scaleVec(force, 1.0 / this->mass); //F = ma
+    this->acceleration  += Math::scaleVec(force, 1.0 / this->mass); //F = ma
+    this->force         += force;
 }

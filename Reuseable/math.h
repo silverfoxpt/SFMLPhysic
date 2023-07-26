@@ -76,6 +76,7 @@ class Math {
         }
 
         static sf::Vector2f normalizeVec(sf::Vector2f vec) {
+            if (CheckSimilarNumber(Length(vec), 0)) { return sf::Vector2f(0, 0);} 
             return scaleVec(vec, 1.0/Length(vec));
         }
 
@@ -94,7 +95,7 @@ class Math {
         }
 
         static bool CheckSimilarPoint(sf::Vector2f a1, sf::Vector2f a2, bool debug = false) {
-            const float epsilon = 0.001;
+            const float epsilon = 0.0001;
             if (std::abs(a1.x - a2.x) <= epsilon && std::abs(a1.y - a2.y) <= epsilon) {
                 if (debug) {
                     //std::cout << "Similar!" << '\n';

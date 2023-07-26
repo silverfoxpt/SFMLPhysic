@@ -10,7 +10,8 @@ void PhysicManager::Update(sf::Event event) {
     this->TestUpdate();
     this->AddForceByInput(event);
     this->AddForceGravity();
-    this->AddForceAirResistance();
+
+    this->AddForceAirResistance(); //always last
 
     for (auto& point: this->points) {
         point.Update(event);
@@ -95,9 +96,8 @@ void PhysicManager::TestUpdate() {
 
 void PhysicManager::AddForceAirResistance() {
     for (auto& point: this->points) {
-        float len = Math::Length(point.velocity);
-        auto p = Math::scaleVec(Math::normalizeVec(point.velocity), -this->dampingCoefficient * len * len); //debug this tomorrow
-        //point.AddForce();
+        auto p = Math::scaleVec(point.velocity, -this->dampingCoefficient); 
+        point.AddForce(p);
     }
 }
 
