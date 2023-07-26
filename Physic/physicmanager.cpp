@@ -4,7 +4,9 @@ void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
 
     this->TestInitialize();
-    this->AddGroundConstraint();
+    if (this->enableGround) {
+        this->AddGroundConstraint();
+    }
 }
 
 void PhysicManager::Update(sf::Event event) {
@@ -35,6 +37,10 @@ void PhysicManager::Update(sf::Event event) {
         for (auto& largeConstraint: this->largeConstraints) {
             largeConstraint.Update(event);
         }
+
+        for (auto& downConstraint: this->downConstraints) {
+            downConstraint.Update(event);
+        }
     }
 }
 
@@ -62,10 +68,13 @@ void PhysicManager::Reset() {
     this->springs.clear();
     this->smallConstraints.clear();
     this->largeConstraints.clear();
+
+    this->downConstraints.clear();
 }
 
 void PhysicManager::TestInitialize() {
     this->TestSpringSystem();
+    //this->TestSoftbody();
 }
 
 void PhysicManager::TestSpringSystem() {
@@ -82,7 +91,7 @@ void PhysicManager::TestSpringSystem() {
     p3.Initialize(this->window); 
     this->points.push_back(p3);
 
-    PhysicPoint p4 = PhysicPoint(2, GameManager::convertScreenToWorld(sf::Vector2f(400, 510)), this->timeStep);
+    PhysicPoint p4 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 510)), this->timeStep);
     p4.Initialize(this->window); 
     this->points.push_back(p4);
 
@@ -120,7 +129,10 @@ void PhysicManager::TestUpdate() {
 }
 
 void PhysicManager::AddGroundConstraint() {
-    
+    for (int i = 0; i < (int) this->points.size(); i++) {
+        DownYConstraint xConstraint(this->getPoint(i), this->groundHeightValue);
+        this->downConstraints.push_back(xConstraint);
+    }
 }
 
 void PhysicManager::AddForceAirResistance() {

@@ -18,21 +18,24 @@
 #include "../Reuseable/drawshapes.h"
 
 #include "physicpoint.h"
+
 #include "constraint.h"
 #include "springconstraint.h"
 #include "inequalconstraint.h"
+#include "boundaryconstraint.h"
 
 class PhysicManager: Monobehaviour<sf::RenderWindow*> {
     public:
         sf::RenderWindow* window;
 
         //used vars
-        float timeStep = 0.00002;
+        float timeStep = 0.00001;
         int substep = 30;
 
-        float dampingCoefficient = 0.0001;
+        double dampingCoefficient = 0.0001;
         float gravityCoefficient = 9.81;
 
+        bool enableGround = true;
         float groundHeightValue = -700;
 
         std::vector<PhysicPoint> points;
@@ -40,6 +43,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         std::vector<SpringConstraint> springs;
         std::vector<SmallerDistanceConstraint> smallConstraints;
         std::vector<LargerDistanceConstraint> largeConstraints;
+
+        std::vector<DownYConstraint> downConstraints;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -55,6 +60,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
     private:
         void TestInitialize();
         void TestSpringSystem();
+        void TestSoftbody();
 
         void TestUpdate();
         
