@@ -13,23 +13,14 @@ void PhysicPoint::Initialize(sf::RenderWindow* window) {
 
 void PhysicPoint::Update(sf::Event event) {
     if (!this->isStatic) {
-        //if (Math::Length(this->velocity) <= 0.01) {this->acceleration = sf::Vector2f(0, 0); this->previousPosition = this->currentPosition;}
-
         auto tmp = this->currentPosition;
-        this->currentPosition =  Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep);
+        this->currentPosition = Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep);
         this->previousPosition = tmp;
 
         this->acceleration = sf::Vector2f(0, 0); //reset acceleration
 
         // Update the velocity
         this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep;
-
-        /*this->currentPosition = this->currentPosition 
-            + Math::scaleVec(this->velocity, this->timeStep)
-            + Math::scaleVec(this->acceleration, 0.5 * this->timeStep * this->timeStep);
-        
-        this->velocity += Math::scaleVec(this->acceleration, this->timeStep);
-        this->acceleration = sf::Vector2f(0, 0); //reset acceleration*/
     }
 }
 

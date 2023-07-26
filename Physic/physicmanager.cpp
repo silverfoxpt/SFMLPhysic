@@ -73,8 +73,73 @@ void PhysicManager::Reset() {
 }
 
 void PhysicManager::TestInitialize() {
-    this->TestSpringSystem();
-    //this->TestSoftbody();
+    //this->TestSpringSystem();
+    this->TestSoftbody();
+}
+
+void PhysicManager::TestSoftbody() {
+    std::vector<std::vector<int>> pointIdx;
+
+    int counter = 0;
+    for (int i = 0; i < 5; i++) {
+        std::vector<int> tt;
+        pointIdx.push_back(tt);
+        for (int j = 0; j < 5; j++) {
+            auto pos = GameManager::convertScreenToWorld(sf::Vector2f(400, 400)) + sf::Vector2f(j * 50, -i * 50);
+            PhysicPoint p1 = PhysicPoint(1, pos, this->timeStep);
+            p1.Initialize(this->window); 
+
+            pointIdx[i].push_back(counter); points.push_back(p1);
+            counter++;
+        }
+    }
+    
+    // Create springs
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            // Create top spring
+            if (j > 0) {
+                SpringConstraint topSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i][j - 1]), 50, 2, 20);
+                topSpring.Initialize(this->window);
+                this->springs.push_back(topSpring);
+            }
+
+            // Create bottom spring
+            if (j < 4) {
+                SpringConstraint bottomSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i][j + 1]), 50, 2, 20);
+                bottomSpring.Initialize(this->window);
+                this->springs.push_back(bottomSpring);
+            }
+
+            // Create left spring
+            if (i > 0) {
+                SpringConstraint leftSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i - 1][j]), 50, 2, 20);
+                leftSpring.Initialize(this->window);
+                this->springs.push_back(leftSpring);
+            }
+
+            // Create right spring
+            if (i < 4) {
+                SpringConstraint rightSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i + 1][j]), 50, 2, 20);
+                rightSpring.Initialize(this->window);
+                this->springs.push_back(rightSpring);
+            }
+
+            // Create two diagonal springs
+            if (i > 0 && j > 0) {
+                SpringConstraint diag1Spring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i - 1][j - 1]), 70.71067, 2, 20);
+                diag1Spring.Initialize(this->window);
+                this->springs.push_back(diag1Spring);
+            }
+
+            if (i < 4 && j > 0) {
+                SpringConstraint diag2Spring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i + 1][j - 1]), 70.71067, 2, 20);
+                diag2Spring.Initialize(this->window);
+                this->springs.push_back(diag2Spring);
+            }
+        }
+    }
+
 }
 
 void PhysicManager::TestSpringSystem() {
@@ -155,19 +220,19 @@ void PhysicManager::AddForceByInput(sf::Event event) {
         }
     }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         for (auto& point: this->points) {
             point.AddForce(sf::Vector2f(-10, 0));
         }
     }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         for (auto& point: this->points) {
             point.AddForce(sf::Vector2f(0, 20));
         }
     }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         for (auto& point: this->points) {
             point.AddForce(sf::Vector2f(0, -20));
         }
