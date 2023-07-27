@@ -11,6 +11,7 @@
 #include <random>
 #include <memory>
 #include <chrono>
+#include <stack>
 
 #include "../Reuseable/gameManager.h"
 #include "../Reuseable/gameobject.h"
@@ -24,6 +25,23 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
+        int numIter         = 5;
+        std::string instruction = "X";
+        std::map<char, std::string> updateMap = {
+            {'X', "F+[[X]-X]-F[-FX]+X"},
+            {'F', "FF"}
+        };
+
+        //move
+        sf::Vector2f dir        = Math::getUpVec();
+        std::stack<std::pair<sf::Vector2f, sf::Vector2f>> mem;
+
+        //settings
+        sf::Vector2f start      = sf:: Vector2f(400, -800);
+        sf::Color color     = sf::Color::White;
+        float lineSize      = 3;
+        float lineLength    = 10;
+        float angle         = 25;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -32,6 +50,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
         void Reset() override;
 
     private:
+        void CreateTree();
         
 };
 
