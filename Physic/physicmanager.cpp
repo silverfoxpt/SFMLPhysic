@@ -74,7 +74,7 @@ void PhysicManager::Reset() {
 
 void PhysicManager::TestInitialize() {
     //this->TestSpringSystem();
-    this->TestSoftbody();
+    //this->TestSoftbody();
 }
 
 void PhysicManager::TestSoftbody() {

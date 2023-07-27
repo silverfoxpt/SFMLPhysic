@@ -13,8 +13,9 @@
 #include "Reuseable/randomsfml.h"
 #include "Reuseable/math.h"
 
-#include "Physic/physicpoint.h"
 #include "Physic/physicmanager.h"
+
+#include "LSys/lsystem.h"
 
 //really early stuff initialization
 Rand Randomize::rand;
@@ -24,6 +25,7 @@ sf::RenderWindow window(sf::VideoMode(800, 800), "SFML Physic");
 sf::Clock deltaTime;
 
 PhysicManager manager;
+LSystem lsystem;
 
 //static vars
 float GameManager::windowWidth                  = window.getSize().x;
@@ -32,7 +34,6 @@ float GameManager::deltaTime                    = 1/300.0;
 
 sf::Vector2u GameManager::mainWindowSize        = sf::Vector2u(800, 800);
 sf::Vector2u GameManager::originalResolution    = sf::Vector2u(1920, 1080);
-
 
 void Test() {
     
@@ -49,27 +50,33 @@ void VisualizeTest(sf::Event event) {
 void Initialize() {
     Test();
 
+    GameManager::InitializeWindowWithResolution(&window);
     manager.Initialize(&window);
+    lsystem.Initialize(&window);
 }
 
 void Update(sf::Event event) {
     UpdateTest(event);
 
     manager.Update(event);
+    lsystem.Update(event);
 }
 
 void Visualize(sf::Event event) {
     VisualizeTest(event);
 
     manager.Visualize(event);
+    lsystem.Visualize(event);
 }
 
 void LateUpdate() {
     manager.LateUpdate();
+    lsystem.LateUpdate();
 }
 
 void Reset() {
     manager.Reset();
+    lsystem.Reset();
 }
 
 void MainGameLoop() {
