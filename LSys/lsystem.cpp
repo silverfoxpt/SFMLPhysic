@@ -3,15 +3,19 @@
 void LSystem::Initialize(sf::RenderWindow* window) {
     this->window = window;
 
-    this->CreateTree();
-}
+    this->pos = this->start;
+    this->dir = Math::getUpVec();
+    this->instruction = "X";
 
-void LSystem::Update(sf::Event event) {
     
 }
 
-void LSystem::Visualize(sf::Event event) {
+void LSystem::Update(sf::Event event) {
+    this->CreateTree();
+}
 
+void LSystem::Visualize(sf::Event event) {
+    
 }
 
 void LSystem::LateUpdate() {
@@ -20,7 +24,7 @@ void LSystem::LateUpdate() {
 
 void LSystem::Reset() {
     while(!mem.empty()) {mem.pop();}
-    this->updateMap.clear();
+    //this->updateMap.clear();
 }
 
 void LSystem::CreateTree() {
@@ -38,5 +42,28 @@ void LSystem::CreateTree() {
         this->instruction = cur;
     }
 
+    //td::cout << this->instruction;
+
     //generate tree
+    for (int i = 0; i < (int) this->instruction.size(); i++) {
+        char c = this->instruction[i];
+
+        if (c == 'F') {
+            DrawUtils::drawLine(this->window, GameManager::convertWorldToScreen(this->pos), GameManager::convertWorldToScreen(this->pos + this->dir * this->lineLength),
+                this->color, this->lineSize);
+            this->pos = this->pos + this->dir * this->lineLength;
+        } else if (c == '-') {
+            this->dir = Math::spinPoint(this->dir, sf::Vector2f(0, 0), this->angle);
+        } else if (c == '+') {
+            this->dir = Math::spinPoint(this->dir, sf::Vector2f(0, 0), -this->angle);
+        } else if (c == '[') {
+            this->mem.push(std::make_pair(this->pos, this->dir));
+        } else if (c == ']') {
+            auto p = this->mem.top(); this->mem.pop();
+            this->pos = p.first;
+            this->dir = p.second;
+        }
+    }
+
+    this->Initialize(this->window);
 }

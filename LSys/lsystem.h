@@ -25,7 +25,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        int numIter         = 5;
+        int numIter         = 6;
         std::string instruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
@@ -34,12 +34,13 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
 
         //move
         sf::Vector2f dir        = Math::getUpVec();
+        sf::Vector2f pos;
         std::stack<std::pair<sf::Vector2f, sf::Vector2f>> mem;
 
         //settings
-        sf::Vector2f start      = sf:: Vector2f(400, -800);
-        sf::Color color     = sf::Color::White;
-        float lineSize      = 3;
+        sf::Vector2f start      = sf::Vector2f(400, -800);
+        sf::Color color         = sf::Color::White;
+        float lineSize      = 5;
         float lineLength    = 10;
         float angle         = 25;
 
