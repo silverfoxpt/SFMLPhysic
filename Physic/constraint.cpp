@@ -16,7 +16,7 @@ void AbsoluteConstraint::Initialize(sf::RenderWindow* window) {
     this->window = window;
 }
 
-void AbsoluteConstraint::Update(sf::Event event) {
+void AbsoluteConstraint::Update(sf::Event event) {    
     if (p1 == nullptr || p2 == nullptr) {
         std::cout << "Error: this is what?" << '\n';
         return;
@@ -26,9 +26,10 @@ void AbsoluteConstraint::Update(sf::Event event) {
         return;
     }
 
-    float error = Math::Distance(p1->currentPosition, p2->currentPosition) - this->dis;
-    auto p1Vec = Math::normalizeVec(p2->currentPosition - p1->currentPosition);
-    auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition);
+    //std::cout << p1->currentPosition.x << " " << p1->currentPosition.y << " " << p2->currentPosition.x << " " << p2->currentPosition.y << '\n';
+    float error = Math::Distance(p1->currentPosition, p2->currentPosition) - this->dis; 
+    auto p1Vec = Math::normalizeVec(p2->currentPosition - p1->currentPosition); 
+    auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition); 
 
     if (p1->isStatic) {
         p2->currentPosition += Math::scaleVec(p2Vec, error);

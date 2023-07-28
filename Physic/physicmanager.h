@@ -69,6 +69,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
             this->constraints.push_back(constraint);
         }
 
+        void AddGroundConstraint();
+
     private:
         void TestInitialize();
         void TestSpringSystem();
@@ -79,7 +81,6 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void AddForceByInput(sf::Event event);
         void AddForceAirResistance();
         void AddForceGravity();
-        void AddGroundConstraint();
 };
 
 

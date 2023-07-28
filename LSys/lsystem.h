@@ -27,7 +27,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
 
         //used vars
         //settings
-        int numIter         = 1;
+        int numIter         = 3;
         std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
@@ -42,7 +42,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
         sf::Vector2f startPos   = sf::Vector2f(400, -700);
         sf::Color color         = sf::Color::White;
         float lineSize          = 5;
-        float lineLength        = 3;
+        float lineLength        = 30;
         float angle             = 25;
 
         //move
