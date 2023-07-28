@@ -20,6 +20,13 @@
 
 #include "../Physic/physicmanager.h"
 
+struct Segment {
+    sf::Vector2f startPoint;
+    sf::Vector2f endPoint;
+    int previousSegmentIndex;
+    int nextSegmentIndex;
+};
+
 class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
     public:
         sf::RenderWindow* window;
@@ -27,28 +34,34 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
 
         //used vars
         //settings
-        int numIter         = 6;
-        std::string startInstruction = "X";
+        int numIter         = 0; //old is 6
+        /*std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
+            {'F', "FF"}
+        };*/
+
+        std::string startInstruction = "F";
+        std::map<char, std::string> updateMap = {
             {'F', "FF"}
         };
 
         //draw
         std::string instruction;
-        std::vector<std::pair<sf::Vector2f, sf::Vector2f>> lines;
+        std::vector<Segment> lines;
 
         //settings
-        sf::Vector2f startPos   = sf::Vector2f(400, -700);
+        sf::Vector2f startPos   = sf::Vector2f(400, -400); //old is sf::Vector2f(400, -700);
         sf::Color color         = sf::Color::White;
         float lineSize          = 5;
-        float lineLength        = 3;
+        float lineLength        = 50; //old is 3
         float angle             = 25;
 
         //move
         sf::Vector2f dir        = Math::getUpVec();
         sf::Vector2f pos;
         std::stack<std::pair<sf::Vector2f, sf::Vector2f>> mem;
+        std::stack<int> stackIndices;
 
         void Initialize(sf::RenderWindow* window, PhysicManager* physicManager) override;
         void Update(sf::Event event) override;

@@ -44,10 +44,12 @@ void AbsoluteConstraint::Update(sf::Event event) {
 }
 
 void AbsoluteConstraint::Visualize(sf::Event event) {
-    DrawUtils::drawLine(this->window, 
-        GameManager::convertWorldToScreen(this->p1->currentPosition), 
-        GameManager::convertWorldToScreen(this->p2->currentPosition), sf::Color::Green, 
-        3.0);
+    if (display) {
+        DrawUtils::drawLine(this->window, 
+            GameManager::convertWorldToScreen(this->p1->currentPosition), 
+            GameManager::convertWorldToScreen(this->p2->currentPosition), sf::Color::Green, 
+            3.0);
+    }
 }
 
 void AbsoluteConstraint::LateUpdate() {

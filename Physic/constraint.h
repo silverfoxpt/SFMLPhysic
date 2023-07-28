@@ -27,6 +27,7 @@ class AbsoluteConstraint: Monobehaviour<sf::RenderWindow*> {
         PhysicPoint* p1;
         PhysicPoint* p2;
         float dis;
+        bool display = true;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
