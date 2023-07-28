@@ -9,7 +9,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager)
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    this->CreatePhysicTree();
+    //this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -57,7 +57,7 @@ void LSystem::CreateTree() {
         if (c == 'F') {
             // Save to lines and update segment indices
             int currentSegmentIndex = this->lines.size();
-            this->lines.push_back(Segment{this->pos, this->pos + this->dir * this->lineLength, previousSegmentIndex, -1});
+            this->lines.push_back(Segment{this->pos, this->pos + this->dir * this->lineLength, previousSegmentIndex, currentSegmentIndex, -1});
 
             if (previousSegmentIndex >= 0) {
                 this->lines[previousSegmentIndex].nextSegmentIndex = currentSegmentIndex;
@@ -99,6 +99,9 @@ void LSystem::DrawTree() {
 void LSystem::CreatePhysicTree() {
     int counter = 0;
 
+    std::vector<int> parentSegmentLastPointIdx;
+    parentSegmentLastPointIdx.resize(this->lines.size());
+
     for (auto& line: this->lines) {
         auto p1 = line.startPoint;
         auto p2 = line.endPoint;
@@ -110,7 +113,12 @@ void LSystem::CreatePhysicTree() {
 
         if (counter == 0) {phy1.isStatic = true;}
 
-        int idx1 = this->manager->addPoint(phy1);
+        int idx1 = -1;
+        if (counter == 0) {
+            idx1 = this->manager->addPoint(phy1);
+        } else {
+            idx1 = parentSegmentLastPointIdx[line.previousSegmentIndex];
+        }
         int idx2 = this->manager->addPoint(phy2);
         int idx3 = this->manager->addPoint(phy3);
 
@@ -129,6 +137,7 @@ void LSystem::CreatePhysicTree() {
         counter++;
 
         //std::cout << this->manager->constraints[this->manager->constraints.size()-1].p1->currentPosition.x << '\n';
+        parentSegmentLastPointIdx[line.currentSegmentIndex] = idx3;
     }
     this->manager->Initialize(this->window);
 }

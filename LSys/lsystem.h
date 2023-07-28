@@ -24,6 +24,7 @@ struct Segment {
     sf::Vector2f startPoint;
     sf::Vector2f endPoint;
     int previousSegmentIndex;
+    int currentSegmentIndex;
     int nextSegmentIndex;
 };
 
