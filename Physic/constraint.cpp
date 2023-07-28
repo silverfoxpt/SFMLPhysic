@@ -31,7 +31,7 @@ void AbsoluteConstraint::Update(sf::Event event) {
     auto p1Vec = Math::normalizeVec(p2->currentPosition - p1->currentPosition); 
     auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition); 
 
-    if (error > 0.1) {
+    if (error > 0) {
         if (p1->isStatic) {
             p2->currentPosition += Math::scaleVec(p2Vec, error);
         } else if (p2->isStatic) {

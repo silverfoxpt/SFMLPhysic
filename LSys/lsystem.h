@@ -34,7 +34,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
 
         //used vars
         //settings
-        int numIter         = 0; //old is 6
+        int numIter         = 6; //old is 6
         /*std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},

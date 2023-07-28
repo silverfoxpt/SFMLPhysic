@@ -20,8 +20,8 @@ void DownYConstraint::Update(sf::Event event) {
     auto p1Vec = sf::Vector2f(0, 1);
 
     if (error < 0) { //x is under presumed value
-        //p1->currentPosition += Math::scaleVec(p1Vec, std::abs(error));
-        p1->currentPosition.y = this->yValue;
+        p1->currentPosition += Math::scaleVec(p1Vec, std::abs(error));
+        //p1->currentPosition.y = this->yValue;
     }
 }
 
