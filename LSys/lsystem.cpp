@@ -3,11 +3,9 @@
 void LSystem::Initialize(sf::RenderWindow* window) {
     this->window = window;
 
-    this->pos = this->start;
-    this->dir = Math::getUpVec();
-    this->instruction = "X";
-
-    
+    this->pos           = this->start;
+    this->instruction   = this->startInstruction;
+    this->dir           = Math::getUpVec();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -40,9 +38,10 @@ void LSystem::CreateTree() {
             }
         }
         this->instruction = cur;
+        cur = "";
     }
 
-    //td::cout << this->instruction;
+    //std::cout << this->instruction;
 
     //generate tree
     for (int i = 0; i < (int) this->instruction.size(); i++) {

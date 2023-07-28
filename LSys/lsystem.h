@@ -26,11 +26,13 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         int numIter         = 6;
-        std::string instruction = "X";
+        std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
             {'F', "FF"}
         };
+
+        std::string instruction;
 
         //move
         sf::Vector2f dir        = Math::getUpVec();
