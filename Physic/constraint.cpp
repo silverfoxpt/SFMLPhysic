@@ -17,6 +17,11 @@ void AbsoluteConstraint::Initialize(sf::RenderWindow* window) {
 }
 
 void AbsoluteConstraint::Update(sf::Event event) {
+    if (p1 == nullptr || p2 == nullptr) {
+        std::cout << "Error: this is what?" << '\n';
+        return;
+    }
+
     if (p1->isStatic && p2->isStatic) {
         return;
     }

@@ -29,14 +29,14 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        float timeStep = 0.005;
-        int substep = 30;
+        float timeStep = 0.005; //old is 0.005
+        int substep = 10;
 
         double dampingCoefficient = 0.1;
         float gravityCoefficient = 9.81;
 
         bool enableGround = true;
-        float groundHeightValue = -700;
+        float groundHeightValue = -750;
 
         std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
@@ -55,6 +55,18 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         PhysicPoint* getPoint(int idx) {
             if (idx < 0 || idx >= (int) this->points.size()) {std::cout << "Point not found!"; return nullptr;}
             return &this->points[idx];
+        }
+
+        int addPoint(PhysicPoint point) {
+            point.Initialize(this->window);
+            this->points.push_back(point);
+
+            return this->points.size() - 1;
+        }
+
+        void addAbsoluteConstraint(AbsoluteConstraint constraint) {
+            constraint.Initialize(this->window);
+            this->constraints.push_back(constraint);
         }
 
     private:

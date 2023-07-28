@@ -52,7 +52,7 @@ void Initialize() {
 
     GameManager::InitializeWindowWithResolution(&window);
     manager.Initialize(&window);
-    lsystem.Initialize(&window);
+    lsystem.Initialize(&window, &manager);
 }
 
 void Update(sf::Event event) {
@@ -113,7 +113,10 @@ int main()
     Initialize();
     while (window.isOpen())
     {
-        MainGameLoop();    
+        MainGameLoop();  
+
+        std::cout << 1.0 / deltaTime.getElapsedTime().asSeconds() << '\n';
+        deltaTime.restart();
     }
 
     //ImGui::SFML::Shutdown(window);

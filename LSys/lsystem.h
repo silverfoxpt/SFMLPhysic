@@ -20,33 +20,37 @@
 
 #include "../Physic/physicmanager.h"
 
-class LSystem: Monobehaviour<sf::RenderWindow*> {
+class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
     public:
         sf::RenderWindow* window;
+        PhysicManager* manager;
 
         //used vars
-        int numIter         = 6;
+        //settings
+        int numIter         = 1;
         std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
             {'F', "FF"}
         };
 
+        //draw
         std::string instruction;
+        std::vector<std::pair<sf::Vector2f, sf::Vector2f>> lines;
+
+        //settings
+        sf::Vector2f startPos   = sf::Vector2f(400, -700);
+        sf::Color color         = sf::Color::White;
+        float lineSize          = 5;
+        float lineLength        = 3;
+        float angle             = 25;
 
         //move
         sf::Vector2f dir        = Math::getUpVec();
         sf::Vector2f pos;
         std::stack<std::pair<sf::Vector2f, sf::Vector2f>> mem;
 
-        //settings
-        sf::Vector2f start      = sf::Vector2f(400, -800);
-        sf::Color color         = sf::Color::White;
-        float lineSize      = 5;
-        float lineLength    = 3;
-        float angle         = 25;
-
-        void Initialize(sf::RenderWindow* window) override;
+        void Initialize(sf::RenderWindow* window, PhysicManager* physicManager) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;
@@ -54,6 +58,9 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
 
     private:
         void CreateTree();
+        void DrawTree();
+
+        void CreatePhysicTree();
         
 };
 
