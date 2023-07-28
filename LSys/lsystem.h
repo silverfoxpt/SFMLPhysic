@@ -41,7 +41,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*> {
         sf::Vector2f start      = sf::Vector2f(400, -800);
         sf::Color color         = sf::Color::White;
         float lineSize      = 5;
-        float lineLength    = 10;
+        float lineLength    = 3;
         float angle         = 25;
 
         void Initialize(sf::RenderWindow* window) override;
