@@ -2,11 +2,12 @@
 
 PhysicPoint::PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep) {
     this->mass = mass;
+
     this->currentPosition = currentPosition;
     this->previousPosition = currentPosition;
-    this->timeStep = timeStep;
 
-    this->checker = 1;
+    this->timeStep = timeStep;
+    this->idx = -1;
 }
 
 void PhysicPoint::Initialize(sf::RenderWindow* window) {

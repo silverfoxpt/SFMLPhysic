@@ -30,7 +30,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         float timeStep = 0.005; //old is 0.005
-        int substep = 10;
+        int substep = 30;
 
         double dampingCoefficient = 0.1;
         float gravityCoefficient = 9.81;
@@ -59,6 +59,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
 
         int addPoint(PhysicPoint point) {
             point.Initialize(this->window);
+            point.idx = this->points.size();
+            
             this->points.push_back(point);
 
             return this->points.size() - 1;

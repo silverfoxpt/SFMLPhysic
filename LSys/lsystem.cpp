@@ -9,7 +9,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager)
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    //this->CreatePhysicTree();
+    this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -87,6 +87,8 @@ void LSystem::CreatePhysicTree() {
         auto p2 = line.second;
         auto pmid = Math::Middlepoint(p1, p2);
 
+        //std::cout << p1.x << " " << p1.y << " " << p2.x << " " << p2.y << " points" << '\n';
+
         PhysicPoint phy1 = PhysicPoint(1, p1, this->manager->timeStep);
         PhysicPoint phy3 = PhysicPoint(1, p2, this->manager->timeStep);
         PhysicPoint phy2 = PhysicPoint(1, pmid, this->manager->timeStep);
@@ -109,8 +111,11 @@ void LSystem::CreatePhysicTree() {
         //this->manager->addAbsoluteConstraint(c2);
         //this->manager->addAbsoluteConstraint(c3);
         counter++;
+
+        std::cout << this->manager->constraints[this->manager->constraints.size()-1].p1->currentPosition.x << '\n';
     }
 
-    //std::cout << this->manager->points.size();
+    //std::cout << this->manager->points.size() << " ";
+    //std::cout << this->manager->constraints.size() << '\n';
     this->manager->Initialize(this->window);
 }

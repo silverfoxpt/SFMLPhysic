@@ -22,7 +22,7 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
         bool isStatic       = false;
         float mass          = 1;
         float timeStep      = 0.01;
-        int checker = 1;
+        int idx             = -1; //debug purpose
 
         sf::Vector2f force                  = sf::Vector2f(0, 0);
 

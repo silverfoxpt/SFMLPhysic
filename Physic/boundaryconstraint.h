@@ -25,7 +25,7 @@ class DownYConstraint: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         PhysicPoint* p1;
-        float xValue;
+        float yValue;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;

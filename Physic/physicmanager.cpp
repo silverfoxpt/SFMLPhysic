@@ -2,6 +2,7 @@
 
 void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
+    this->points.reserve(30000);
 
     this->TestInitialize();
     if (this->enableGround) {
@@ -46,7 +47,7 @@ void PhysicManager::Update(sf::Event event) {
 
 void PhysicManager::Visualize(sf::Event event) {
     for (auto& point: this->points) {
-        point.Visualize(event);
+        //point.Visualize(event); 
     }
 
     for (auto& constraint: this->constraints) {
@@ -193,8 +194,8 @@ void PhysicManager::TestUpdate() {
 
 void PhysicManager::AddGroundConstraint() {
     for (int i = 0; i < (int) this->points.size(); i++) {
-        DownYConstraint xConstraint(this->getPoint(i), this->groundHeightValue);
-        this->downConstraints.push_back(xConstraint);
+        DownYConstraint yConstraint(this->getPoint(i), this->groundHeightValue);
+        this->downConstraints.push_back(yConstraint);
     }
 }
 
