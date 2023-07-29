@@ -161,23 +161,23 @@ void PhysicManager::TestSpringSystem() {
     p4.Initialize(this->window); 
     this->points.push_back(p4);
 
-    AbsoluteConstraint constraint(this->getPoint(0), this->getPoint(1), 50);
+    /*AbsoluteConstraint constraint(this->getPoint(0), this->getPoint(1), 50);
     this->addAbsoluteConstraint(constraint);
 
     AbsoluteConstraint constraint2(this->getPoint(1), this->getPoint(2), 50);
-    this->addAbsoluteConstraint(constraint2);        
+    this->addAbsoluteConstraint(constraint2); */
 
     /*AbsoluteConstraint cosntraint3(this->getPoint(1), this->getPoint(3), 60);
     cosntraint3.Initialize(this->window);
     this->constraints.push_back(cosntraint3);*/
 
-    /*SpringConstraint spring(this->getPoint(0), this->getPoint(1), 70, 2, 20);
+    SpringConstraint spring(this->getPoint(0), this->getPoint(1), 70, 2, 20);
     spring.Initialize(this->window);
     this->springs.push_back(spring);
 
     SpringConstraint spring2(this->getPoint(1), this->getPoint(2), 70, 2, 20);
     spring2.Initialize(this->window);
-    this->springs.push_back(spring2);*/
+    this->springs.push_back(spring2);
 
     /*SmallerDistanceConstraint smallCon(25, this->getPoint(0), this->getPoint(1));
     smallCon.Initialize(this->window);
@@ -201,7 +201,9 @@ void PhysicManager::AddGroundConstraint() {
 
 void PhysicManager::AddForceAirResistance() {
     for (auto& point: this->points) {
-        auto p = Math::scaleVec(point.velocity, -this->dampingCoefficient); 
+        float length = Math::Length(point.velocity);
+
+        auto p = Math::scaleVec(Math::normalizeVec(point.velocity), -this->dampingCoefficient * length); 
         point.AddForce(p);
     }
 }
@@ -215,7 +217,7 @@ void PhysicManager::AddForceGravity() {
 void PhysicManager::AddForceByInput(sf::Event event) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         for (auto& point: this->points) {
-            point.AddForce(sf::Vector2f(10, 0));
+            point.AddForce(sf::Vector2f(1, 0));
         }
     }
 

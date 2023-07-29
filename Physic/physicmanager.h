@@ -30,12 +30,12 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         float timeStep = 0.005; //old is 0.005
-        int substep = 40;  //old is 30
+        int substep = 100;  //old is 30
 
-        double dampingCoefficient = 0.1;
+        float dampingCoefficient = 0.1; //old is 0.1
         float gravityCoefficient = 9.81;
 
-        bool enableGround = false; //old is true
+        bool enableGround = true; //old is true
         float groundHeightValue = -750;
 
         std::vector<PhysicPoint> points;

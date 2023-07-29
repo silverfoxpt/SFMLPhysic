@@ -131,8 +131,8 @@ void LSystem::CreatePhysicTree() {
             this->lineLength);
         c3.display = true;
 
-        //this->manager->addAbsoluteConstraint(c1);
-        //this->manager->addAbsoluteConstraint(c2);
+        this->manager->addAbsoluteConstraint(c1);
+        this->manager->addAbsoluteConstraint(c2);
         this->manager->addAbsoluteConstraint(c3);
         counter++;
 

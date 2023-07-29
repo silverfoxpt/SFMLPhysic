@@ -31,15 +31,13 @@ void AbsoluteConstraint::Update(sf::Event event) {
     auto p1Vec = Math::normalizeVec(p2->currentPosition - p1->currentPosition); 
     auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition); 
 
-    if (error > 0) {
-        if (p1->isStatic) {
-            p2->currentPosition += Math::scaleVec(p2Vec, error);
-        } else if (p2->isStatic) {
-            p1->currentPosition += Math::scaleVec(p1Vec, error);
-        } else {
-            p1->currentPosition += Math::scaleVec(p1Vec, error * this->p2MassPortion);
-            p2->currentPosition += Math::scaleVec(p2Vec, error * this->p1MassPortion);
-        }
+    if (p1->isStatic) {
+        p2->currentPosition += Math::scaleVec(p2Vec, error);
+    } else if (p2->isStatic) {
+        p1->currentPosition += Math::scaleVec(p1Vec, error);
+    } else {
+        p1->currentPosition += Math::scaleVec(p1Vec, error * this->p2MassPortion);
+        p2->currentPosition += Math::scaleVec(p2Vec, error * this->p1MassPortion);
     }
 }
 
