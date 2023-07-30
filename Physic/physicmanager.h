@@ -29,8 +29,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        float timeStep = 0.005; //old is 0.005
-        int substep = 100;  //old is 30
+        float timeStep = 0.06; //old is 0.005
+        int substep = 30;  //old is 30
 
         float dampingCoefficient = 0.1; //old is 0.1
         float gravityCoefficient = 9.81;

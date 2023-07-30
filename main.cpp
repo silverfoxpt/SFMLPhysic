@@ -111,6 +111,7 @@ int main()
     //ImGui::GetIO().IniFilename = "imgui.ini";
 
     Initialize();
+    window.setFramerateLimit(300);
     while (window.isOpen())
     {
         MainGameLoop();  

@@ -24,13 +24,14 @@ void PhysicPoint::Update(sf::Event event) {
 
         // Update the velocity
         this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep;
+        //std::cout << velocity.x << " " << velocity.y << '\n';
 
         //euler intergration
         /*this->velocity += this->acceleration * timeStep;
         this->currentPosition += this->velocity * timeStep + (float) 0.5 * this->acceleration * timeStep * timeStep;*/
 
         /*auto tmp = this->currentPosition;
-        this->currentPosition += Math::scaleVec((this->currentPosition - this->previousPosition), 0.999)  + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep);
+        this->currentPosition += Math::scaleVec((this->currentPosition - this->previousPosition), 0.995)  + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep);
         this->previousPosition = tmp;
         this->acceleration = sf::Vector2f(0, 0); //reset acceleration*/
 
