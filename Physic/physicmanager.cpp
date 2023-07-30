@@ -47,7 +47,7 @@ void PhysicManager::Update(sf::Event event) {
 
 void PhysicManager::Visualize(sf::Event event) {
     for (auto& point: this->points) {
-        point.Visualize(event); 
+        //point.Visualize(event); 
     }
 
     for (auto& constraint: this->constraints) {

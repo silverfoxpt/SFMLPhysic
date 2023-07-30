@@ -9,7 +9,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager)
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    //this->CreatePhysicTree();
+    this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -102,6 +102,9 @@ void LSystem::CreatePhysicTree() {
     std::vector<int> parentSegmentLastPointIdx;
     parentSegmentLastPointIdx.resize(this->lines.size());
 
+    std::vector<int> parentSegmentMiddlePointIdx;
+    parentSegmentMiddlePointIdx.resize(this->lines.size());
+
     for (auto& line: this->lines) {
         auto p1 = line.startPoint;
         auto p2 = line.endPoint;
@@ -134,10 +137,21 @@ void LSystem::CreatePhysicTree() {
         this->manager->addAbsoluteConstraint(c1);
         this->manager->addAbsoluteConstraint(c2);
         this->manager->addAbsoluteConstraint(c3);
-        counter++;
+        
 
-        //std::cout << this->manager->constraints[this->manager->constraints.size()-1].p1->currentPosition.x << '\n';
+        //add spring constraint
+        if (counter != 0) {
+            auto mCurrent   = this->manager->getPoint(idx2);
+            auto mPrev      = this->manager->getPoint(parentSegmentMiddlePointIdx[line.previousSegmentIndex]);
+            AbsoluteConstraint m1 = AbsoluteConstraint(mCurrent, mPrev, 
+                Math::Distance(mCurrent->currentPosition, mPrev->currentPosition)); m1.display = true;
+            this->manager->addAbsoluteConstraint(m1);
+        }
+
         parentSegmentLastPointIdx[line.currentSegmentIndex] = idx3;
+        parentSegmentMiddlePointIdx[line.currentSegmentIndex] = idx2;
+
+        counter++;
     }
     this->manager->Initialize(this->window);
 }

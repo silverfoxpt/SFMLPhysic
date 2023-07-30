@@ -35,27 +35,27 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
 
         //used vars
         //settings
-        int numIter         = 1; //old is 6
-        /*std::string startInstruction = "X";
+        int numIter         = 3; //old is 6
+        std::string startInstruction = "X";
         std::map<char, std::string> updateMap = {
             {'X', "F+[[X]-X]-F[-FX]+X"},
             {'F', "FF"}
-        };*/
+        };
 
-        std::string startInstruction = "F";
+        /*std::string startInstruction = "F";
         std::map<char, std::string> updateMap = {
             {'F', "FF[-F]+F"}
-        };
+        };*/
 
         //draw
         std::string instruction;
         std::vector<Segment> lines;
 
         //settings
-        sf::Vector2f startPos   = sf::Vector2f(400, -400); //old is sf::Vector2f(400, -700);
+        sf::Vector2f startPos   = sf::Vector2f(400, -600); //old is sf::Vector2f(400, -700);
         sf::Color color         = sf::Color::White;
         float lineSize          = 5;
-        float lineLength        = 50; //old is 3
+        float lineLength        = 10; //old is 3
         float angle             = 25;
 
         //move
