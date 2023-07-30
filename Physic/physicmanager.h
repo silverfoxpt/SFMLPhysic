@@ -32,7 +32,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         float timeStep = 0.06; //old is 0.005
         int substep = 30;  //old is 30
 
-        float dampingCoefficient = 0.1; //old is 0.1
+        float dampingCoefficient = 0.95; //old is 0.1
         float gravityCoefficient = 9.81;
 
         bool enableGround = true; //old is true
