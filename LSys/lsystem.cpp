@@ -9,11 +9,11 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager)
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    this->CreatePhysicTree();
+    //this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
-    this->UpdatePhysicTree();
+    //this->UpdatePhysicTree();
 }
 
 void LSystem::Visualize(sf::Event event) {

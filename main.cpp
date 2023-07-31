@@ -17,6 +17,8 @@
 
 #include "LSys/lsystem.h"
 
+#include "Perlin/flowfield.h"
+
 //really early stuff initialization
 Rand Randomize::rand;
 
@@ -26,6 +28,7 @@ sf::Clock deltaTime;
 
 PhysicManager manager;
 LSystem lsystem;
+Flowfield flowfield;
 
 //static vars
 float GameManager::windowWidth                  = window.getSize().x;
@@ -53,6 +56,7 @@ void Initialize() {
     GameManager::InitializeWindowWithResolution(&window);
     manager.Initialize(&window);
     lsystem.Initialize(&window, &manager);
+    flowfield.Initialize(&window);
 }
 
 void Update(sf::Event event) {
@@ -60,6 +64,7 @@ void Update(sf::Event event) {
 
     manager.Update(event);
     lsystem.Update(event);
+    flowfield.Update(event);
 }
 
 void Visualize(sf::Event event) {
@@ -67,16 +72,19 @@ void Visualize(sf::Event event) {
 
     manager.Visualize(event);
     lsystem.Visualize(event);
+    flowfield.Visualize(event);
 }
 
 void LateUpdate() {
     manager.LateUpdate();
     lsystem.LateUpdate();
+    flowfield.LateUpdate();
 }
 
 void Reset() {
     manager.Reset();
     lsystem.Reset();
+    flowfield.Reset();
 }
 
 void MainGameLoop() {

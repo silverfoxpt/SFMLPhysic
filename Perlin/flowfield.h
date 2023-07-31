@@ -42,7 +42,7 @@ class Flowfield: Monobehaviour<sf::RenderWindow*> {
         void Reset() override;
 
     private:
-        
+        void visualizeFlowField();
 };
 
 #endif
