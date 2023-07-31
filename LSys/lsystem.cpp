@@ -1,19 +1,20 @@
 #include "lsystem.h"
 
-void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager) {
+void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager, Flowfield* flowfield) {
     this->window = window;
     this->manager = physicManager;
+    this->flowfield = flowfield;
 
     this->pos           = this->startPos;
     this->instruction   = this->startInstruction;
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    //this->CreatePhysicTree();
+    this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
-    //this->UpdatePhysicTree();
+    this->UpdatePhysicTree();
 }
 
 void LSystem::Visualize(sf::Event event) {
@@ -214,24 +215,28 @@ void LSystem::CreatePhysicTree() {
 void LSystem::UpdatePhysicTree() {
     for (auto endpoint: this->lastEndpointIndex) {
         auto p = this->manager->getPoint(endpoint);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             p->AddForce(sf::Vector2f(3.1, 0));
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             p->AddForce(sf::Vector2f(-3.1, 0));
-        }
+        }*/
+        auto pos = p->currentPosition;
+        p->AddForce(this->flowfield->getForceFromPos(pos.x, pos.y) * 3.1f);
     }
 
     for (auto endpoint: this->allEndpointIndex) {
         auto p = this->manager->getPoint(endpoint);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             p->AddForce(sf::Vector2f(2, 0));
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             p->AddForce(sf::Vector2f(-2, 0));
         }
-        p->AddForce(sf::Vector2f(0, 2));
+        p->AddForce(sf::Vector2f(0, 2));*/
+        auto pos = p->currentPosition;
+        p->AddForce(this->flowfield->getForceFromPos(pos.x, pos.y) * 2.0f);
     }
 }

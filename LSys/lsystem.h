@@ -20,6 +20,8 @@
 
 #include "../Physic/physicmanager.h"
 
+#include "../Perlin/flowfield.h"
+
 struct Segment {
     sf::Vector2f startPoint;
     sf::Vector2f endPoint;
@@ -28,10 +30,11 @@ struct Segment {
     int nextSegmentIndex;
 };
 
-class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
+class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
     public:
         sf::RenderWindow* window;
         PhysicManager* manager;
+        Flowfield* flowfield;
 
         //used vars
         //settings
@@ -75,7 +78,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*> {
         std::vector<int> lastEndpointIndex;
         std::vector<int> allEndpointIndex;
 
-        void Initialize(sf::RenderWindow* window, PhysicManager* physicManager) override;
+        void Initialize(sf::RenderWindow* window, PhysicManager* physicManager, Flowfield* flowfield) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;

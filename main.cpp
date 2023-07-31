@@ -55,8 +55,9 @@ void Initialize() {
 
     GameManager::InitializeWindowWithResolution(&window);
     manager.Initialize(&window);
-    lsystem.Initialize(&window, &manager);
     flowfield.Initialize(&window);
+
+    lsystem.Initialize(&window, &manager, &flowfield);
 }
 
 void Update(sf::Event event) {

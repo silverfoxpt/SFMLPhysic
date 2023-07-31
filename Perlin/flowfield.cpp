@@ -2,6 +2,7 @@
 
 void Flowfield::Initialize(sf::RenderWindow* window) {
     this->window = window;
+
     this->noise = PerlinNoise();
     this->clock.restart();
 
@@ -28,7 +29,7 @@ void Flowfield::Update(sf::Event event) {
 }
 
 void Flowfield::Visualize(sf::Event event) {
-    this->visualizeFlowField();
+    //this->visualizeFlowField();
 }
 
 void Flowfield::LateUpdate() {
@@ -64,4 +65,24 @@ void Flowfield::visualizeFlowField() {
             DrawUtils::drawLine(this->window, startPoint, endPoint, sf::Color::White, 1);
         }
     }
+}
+
+sf::Vector2f Flowfield::getForceFromPos(float x, float y) {
+    sf::Vector2f screenPos = GameManager::convertWorldToScreen(sf::Vector2f(x, y));
+
+    int row = screenPos.y / this->cellSize;
+    int col = screenPos.x / this->cellSize;
+    if (row < 0 || col < 0 || row >= this->row || col >= this->col) {
+        //std::cout << "Nani?" << '\n';
+        return sf::Vector2f(0, 0);
+    }
+    
+    auto angle = this->angleValues[row][col];
+
+    //calculate dir vec
+    sf::Vector2f dir = Math::spinPoint(Math::getUpVec(), sf::Vector2f(0, 0), angle);
+
+    //calculate strength
+    float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.1) + 1) / 2; // rane from 0 -> 1
+    return dir * strength;
 }

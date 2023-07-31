@@ -42,6 +42,8 @@ class Flowfield: Monobehaviour<sf::RenderWindow*> {
         void LateUpdate() override;
         void Reset() override;
 
+        sf::Vector2f getForceFromPos(float x, float y);
+
     private:
         void visualizeFlowField();
 };
