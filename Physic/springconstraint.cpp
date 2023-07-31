@@ -33,10 +33,12 @@ void SpringConstraint::Update(sf::Event event) {
 }
 
 void SpringConstraint::Visualize(sf::Event event) {
-    DrawUtils::drawLine(this->window, 
-        GameManager::convertWorldToScreen(this->p1->currentPosition), 
-        GameManager::convertWorldToScreen(this->p2->currentPosition), sf::Color::Red, 
-        3.0);
+    if (this->display) {
+        DrawUtils::drawLine(this->window, 
+            GameManager::convertWorldToScreen(this->p1->currentPosition), 
+            GameManager::convertWorldToScreen(this->p2->currentPosition), sf::Color::Red, 
+            3.0);
+    }
 }
 
 void SpringConstraint::LateUpdate() {

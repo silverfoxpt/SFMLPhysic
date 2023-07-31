@@ -13,7 +13,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager)
 }
 
 void LSystem::Update(sf::Event event) {
-
+    this->UpdatePhysicTree();
 }
 
 void LSystem::Visualize(sf::Event event) {
@@ -27,6 +27,8 @@ void LSystem::LateUpdate() {
 void LSystem::Reset() {
     while(!mem.empty()) {mem.pop();}
     this->lines.clear();
+    this->lastEndpointIndex.clear();
+    this->allEndpointIndex.clear();
     
     this->pos           = this->startPos;
     this->instruction   = this->startInstruction;
@@ -110,9 +112,9 @@ void LSystem::CreatePhysicTree() {
         auto p2 = line.endPoint;
         auto pmid = Math::Middlepoint(p1, p2);
 
-        PhysicPoint phy1 = PhysicPoint(1, p1, this->manager->timeStep);
-        PhysicPoint phy3 = PhysicPoint(1, p2, this->manager->timeStep);
-        PhysicPoint phy2 = PhysicPoint(1, pmid, this->manager->timeStep);
+        PhysicPoint phy1 = PhysicPoint(0.01, p1, this->manager->timeStep);
+        PhysicPoint phy3 = PhysicPoint(0.01, p2, this->manager->timeStep);
+        PhysicPoint phy2 = PhysicPoint(0.01, pmid, this->manager->timeStep);
 
         if (counter == 0) {phy1.isStatic = true;}
 
@@ -141,17 +143,95 @@ void LSystem::CreatePhysicTree() {
 
         //add spring constraint
         if (counter != 0) {
+            //anchor to each other
             auto mCurrent   = this->manager->getPoint(idx2);
             auto mPrev      = this->manager->getPoint(parentSegmentMiddlePointIdx[line.previousSegmentIndex]);
             AbsoluteConstraint m1 = AbsoluteConstraint(mCurrent, mPrev, 
                 Math::Distance(mCurrent->currentPosition, mPrev->currentPosition)); m1.display = true;
             this->manager->addAbsoluteConstraint(m1);
+            
+            //anchor to ground
+            float offset        = (phy3.currentPosition.x > this->startPos.x) ? 50 : -50;
+
+            auto anchorPos      = sf::Vector2f(phy3.currentPosition.x + offset, this->manager->groundHeightValue);
+            auto anchorCounterPos = sf::Vector2f(phy3.currentPosition.x - offset, this->manager->groundHeightValue);
+
+            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
+            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
+
+            int idxAnchor       = this->manager->addPoint(pAnchor);     
+            int idxCounterAnchor = this->manager->addPoint(pCounterAnchor);      
+
+            SpringConstraint anchorConstraint = SpringConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxAnchor),
+                Math::Distance(anchorPos, phy3.currentPosition), 2, 20); 
+            anchorConstraint.display = false;
+
+            SpringConstraint anchorConstraint2 = SpringConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxCounterAnchor),
+                Math::Distance(anchorCounterPos, phy3.currentPosition), 2, 20); 
+            anchorConstraint2.display = false;
+
+            this->manager->addSpringConstraint(anchorConstraint);
+            this->manager->addSpringConstraint(anchorConstraint2);
+        } else { //for the first trunk, we need some absolute constraints
+            float offset        = (phy3.currentPosition.x > this->startPos.x) ? 50 : -50;
+
+            auto anchorPos      = sf::Vector2f(phy3.currentPosition.x + offset, this->manager->groundHeightValue);
+            auto anchorCounterPos = sf::Vector2f(phy3.currentPosition.x - offset, this->manager->groundHeightValue);
+
+            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
+            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
+
+            int idxAnchor       = this->manager->addPoint(pAnchor);     
+            int idxCounterAnchor = this->manager->addPoint(pCounterAnchor);      
+            
+            AbsoluteConstraint anchorConstraint = AbsoluteConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxAnchor),
+                Math::Distance(anchorPos, phy3.currentPosition)); 
+            anchorConstraint.display = false;
+
+            AbsoluteConstraint anchorConstraint2 = AbsoluteConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxCounterAnchor),
+                Math::Distance(anchorCounterPos, phy3.currentPosition)); 
+            anchorConstraint2.display = false;
+
+            this->manager->addAbsoluteConstraint(anchorConstraint);
+            this->manager->addAbsoluteConstraint(anchorConstraint2);
         }
 
         parentSegmentLastPointIdx[line.currentSegmentIndex] = idx3;
         parentSegmentMiddlePointIdx[line.currentSegmentIndex] = idx2;
 
+        if (line.nextSegmentIndex == -1) {
+            this->lastEndpointIndex.push_back(idx3);
+        } else {
+            this->allEndpointIndex.push_back(idx3);
+        }
+        
+
         counter++;
     }
     this->manager->Initialize(this->window);
+}
+
+void LSystem::UpdatePhysicTree() {
+    for (auto endpoint: this->lastEndpointIndex) {
+        auto p = this->manager->getPoint(endpoint);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            p->AddForce(sf::Vector2f(3.1, 0));
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            p->AddForce(sf::Vector2f(-3.1, 0));
+        }
+    }
+
+    for (auto endpoint: this->allEndpointIndex) {
+        auto p = this->manager->getPoint(endpoint);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            p->AddForce(sf::Vector2f(2, 0));
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            p->AddForce(sf::Vector2f(-2, 0));
+        }
+        p->AddForce(sf::Vector2f(0, 2));
+    }
 }

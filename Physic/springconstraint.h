@@ -31,6 +31,8 @@ class SpringConstraint: Monobehaviour<sf::RenderWindow*> {
         float springCoefficient;
         float allowedMaxBend;
 
+        bool display = true;
+
         LargerDistanceConstraint largeConstraint;
         SmallerDistanceConstraint smallConstraint;
 

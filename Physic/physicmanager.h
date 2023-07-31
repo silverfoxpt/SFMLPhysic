@@ -29,11 +29,11 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        float timeStep = 0.06; //old is 0.005
+        float timeStep = 0.06; //old is 0.06
         int substep = 30;  //old is 30
 
-        float dampingCoefficient = 0.95; //old is 0.1
-        float gravityCoefficient = -9.81;
+        float dampingCoefficient = 0.02; //old is 0.1
+        float gravityCoefficient = 9.81; //old is 9.81 - Earth gravity
 
         bool enableGround = true; //old is true
         float groundHeightValue = -750;
@@ -69,6 +69,11 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void addAbsoluteConstraint(AbsoluteConstraint constraint) {
             constraint.Initialize(this->window);
             this->constraints.push_back(constraint);
+        }
+
+        void addSpringConstraint(SpringConstraint constraint) {
+            constraint.Initialize(this->window);
+            this->springs.push_back(constraint);
         }
 
         void AddGroundConstraint();

@@ -12,7 +12,7 @@ void PhysicManager::Initialize(sf::RenderWindow* window) {
 
 void PhysicManager::Update(sf::Event event) {
     this->TestUpdate();
-    this->AddForceByInput(event);
+    //this->AddForceByInput(event);
     this->AddForceGravity();
     for (auto& spring: this->springs) { spring.AddSpringForce(); }
 
@@ -217,13 +217,13 @@ void PhysicManager::AddForceGravity() {
 void PhysicManager::AddForceByInput(sf::Event event) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         for (auto& point: this->points) {
-            point.AddForce(sf::Vector2f(10, 0));
+            point.AddForce(sf::Vector2f(2, 0));
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         for (auto& point: this->points) {
-            point.AddForce(sf::Vector2f(-10, 0));
+            point.AddForce(sf::Vector2f(-2, 0));
         }
     }
 
