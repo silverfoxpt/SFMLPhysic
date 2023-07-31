@@ -22,6 +22,15 @@ double PerlinNoise::grad(int hash, double x, double y) {
     return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
 }
 
+double PerlinNoise::grad1D(int hash, double x) {
+    int h = hash & 15;
+    double grad = 1.0 + (h & 7); // Gradient value between 1 and 8
+    if (h & 8) {
+        grad = -grad; // Randomly invert the gradient to get both positive and negative values
+    }
+    return grad * x;
+}
+
 double PerlinNoise::noise(double x, double y) {
     int X = static_cast<int>(std::floor(x)) & 255;
     int Y = static_cast<int>(std::floor(y)) & 255;
@@ -37,4 +46,16 @@ double PerlinNoise::noise(double x, double y) {
     int BB = permutation[B + 1];
     return lerp(v, lerp(u, grad(permutation[AA], x, y), grad(permutation[BA], x - 1, y)),
                    lerp(u, grad(permutation[AB], x, y - 1), grad(permutation[BB], x - 1, y - 1)));
+}
+
+double PerlinNoise::noise1D(double x) {
+    // Add the time parameter to the x coordinate
+    //x += time;
+
+    int X = static_cast<int>(std::floor(x)) & 255;
+    x -= std::floor(x);
+    double u = fade(x);
+    int A = permutation[X];
+    int B = permutation[X + 1];
+    return lerp(u, grad1D(permutation[A], x), grad1D(permutation[B], x - 1));
 }

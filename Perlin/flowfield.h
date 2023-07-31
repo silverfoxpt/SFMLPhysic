@@ -34,6 +34,7 @@ class Flowfield: Monobehaviour<sf::RenderWindow*> {
 
         //used vars
         std::vector<std::vector<float>> angleValues;
+        sf::Clock clock;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;

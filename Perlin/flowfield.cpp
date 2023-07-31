@@ -3,6 +3,7 @@
 void Flowfield::Initialize(sf::RenderWindow* window) {
     this->window = window;
     this->noise = PerlinNoise();
+    this->clock.restart();
 
     //calculate field size
     this->row = GameManager::mainWindowSize.y / this->cellSize;
@@ -38,6 +39,7 @@ void Flowfield::Reset() {
     this->angleValues.clear();
 
     this->noise = PerlinNoise();
+    this->clock.restart();
 }
 
 void Flowfield::visualizeFlowField() {
@@ -50,10 +52,13 @@ void Flowfield::visualizeFlowField() {
             //calculate dir vec
             sf::Vector2f dir = Math::spinPoint(Math::getUpVec(), sf::Vector2f(0, 0), angle);
 
+            //calculate strength
+            float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.1) + 1) / 2 * (this->cellSize / 2.0f);
+
             sf::Vector2f startPoint 
                 = sf::Vector2f(j * this->cellSize + cellSize / 2.0f, i * this->cellSize + cellSize / 2.0f); //middle of cell
             sf::Vector2f endPoint 
-                = startPoint + dir * (this->cellSize / 2.0f); //half of cell
+                = startPoint + dir * strength; //half of cell
 
             //draw line
             DrawUtils::drawLine(this->window, startPoint, endPoint, sf::Color::White, 1);

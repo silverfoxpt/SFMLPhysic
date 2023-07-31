@@ -18,10 +18,13 @@ private:
 public:
     PerlinNoise();
     double noise(double x, double y);
+    double noise1D(double x);
+
 private:
     double fade(double t);
     double lerp(double t, double a, double b);
     double grad(int hash, double x, double y);
+    double grad1D(int hash, double x);
 };
 
 #endif
