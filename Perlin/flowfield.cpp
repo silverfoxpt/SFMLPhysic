@@ -14,7 +14,7 @@ void Flowfield::Initialize(sf::RenderWindow* window) {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             //calculate angle
-            float angle = this->noise.noise(i * 0.1, j * 0.1);
+            float angle = this->noise.noise(i * 0.02, j * 0.02);
             angle += 1; //range from 0 -> 2
             angle *= 180; //range from 0 -> 360
 
@@ -54,12 +54,13 @@ void Flowfield::visualizeFlowField() {
             sf::Vector2f dir = Math::spinPoint(Math::getUpVec(), sf::Vector2f(0, 0), angle);
 
             //calculate strength
-            float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.1) + 1) / 2 * (this->cellSize / 2.0f);
+            float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.5) + 1) / 2 * (this->cellSize / 2.0f);
 
             sf::Vector2f startPoint 
-                = sf::Vector2f(j * this->cellSize + cellSize / 2.0f, i * this->cellSize + cellSize / 2.0f); //middle of cell
+                = sf::Vector2f(j * this->cellSize + cellSize / 2.0f, i * this->cellSize + cellSize / 2.0f) + 
+                  (-dir * (cellSize / 2.0f)); //first corner
             sf::Vector2f endPoint 
-                = startPoint + dir * strength; //half of cell
+                = startPoint + dir * strength * 2.0f; //other corner
 
             //draw line
             DrawUtils::drawLine(this->window, startPoint, endPoint, sf::Color::White, 1);
@@ -83,6 +84,6 @@ sf::Vector2f Flowfield::getForceFromPos(float x, float y) {
     sf::Vector2f dir = Math::spinPoint(Math::getUpVec(), sf::Vector2f(0, 0), angle);
 
     //calculate strength
-    float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.1) + 1) / 2; // rane from 0 -> 1
+    float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.5) + 1) / 2; // rane from 0 -> 1
     return dir * strength;
 }
