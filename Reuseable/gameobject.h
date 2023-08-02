@@ -14,9 +14,12 @@
 
 #include "gameManager.h"
 #include "math.h"
+#include "templateclass.h"
 
-class GameObject {
+class GameObject : Monobehaviour<sf::RenderWindow*>{
     public:
+        sf::RenderWindow* window;
+
         sf::RectangleShape user;
         sf::Vector2f position;
         sf::Vector2f scale;
@@ -36,6 +39,12 @@ class GameObject {
         
         sf::Vector2f GetPosition();
         sf::Vector2f GetNormalizeRotationVector();
+
+        void Initialize(sf::RenderWindow* window) override;
+        void Update(sf::Event event) override;
+        void Visualize(sf::Event event) override;
+        void LateUpdate() override;
+        void Reset() override;
 
     private:
 };

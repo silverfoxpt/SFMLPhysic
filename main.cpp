@@ -19,6 +19,8 @@
 
 #include "Perlin/flowfield.h"
 
+#include "Reuseable/gameobjectmanager.h"
+
 //really early stuff initialization
 Rand Randomize::rand;
 
@@ -26,6 +28,7 @@ Rand Randomize::rand;
 sf::RenderWindow window(sf::VideoMode(800, 800), "SFML Physic");
 sf::Clock deltaTime;
 
+GameobjectManager gameobjectManager;
 PhysicManager manager;
 LSystem lsystem;
 Flowfield flowfield;
@@ -54,6 +57,7 @@ void Initialize() {
     Test();
 
     GameManager::InitializeWindowWithResolution(&window);
+    gameobjectManager.Initialize(&window);
     manager.Initialize(&window);
     flowfield.Initialize(&window);
 
@@ -63,6 +67,7 @@ void Initialize() {
 void Update(sf::Event event) {
     UpdateTest(event);
 
+    gameobjectManager.Update(event);
     manager.Update(event);
     lsystem.Update(event);
     flowfield.Update(event);
@@ -71,18 +76,21 @@ void Update(sf::Event event) {
 void Visualize(sf::Event event) {
     VisualizeTest(event);
 
+    gameobjectManager.Visualize(event);
     manager.Visualize(event);
     lsystem.Visualize(event);
     flowfield.Visualize(event);
 }
 
 void LateUpdate() {
+    gameobjectManager.LateUpdate();
     manager.LateUpdate();
     lsystem.LateUpdate();
     flowfield.LateUpdate();
 }
 
 void Reset() {
+    gameobjectManager.Reset();
     manager.Reset();
     lsystem.Reset();
     flowfield.Reset();

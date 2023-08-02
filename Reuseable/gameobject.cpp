@@ -15,6 +15,26 @@ GameObject::GameObject(int width, int height) {
     this->user.setRotation(this->rotation);
 }
 
+void GameObject::Initialize(sf::RenderWindow* window) {
+    this->window = window;
+}
+
+void GameObject::Update(sf::Event event) {
+
+}
+
+void GameObject::Visualize(sf::Event event) {
+    this->window->draw(this->user);
+}
+
+void GameObject::LateUpdate() {
+
+}
+
+void GameObject::Reset() {
+
+}
+
 void GameObject::SetWorldPosition(sf::Vector2f position) {
     this->position = position;
     this->user.setPosition(GameManager::convertWorldToScreen(this->position));

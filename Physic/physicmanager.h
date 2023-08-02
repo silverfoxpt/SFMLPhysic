@@ -38,14 +38,6 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         bool enableGround = true; //old is true
         float groundHeightValue = -750;
 
-        std::vector<PhysicPoint> points;
-        std::vector<AbsoluteConstraint> constraints;
-        std::vector<SpringConstraint> springs;
-        std::vector<SmallerDistanceConstraint> smallConstraints;
-        std::vector<LargerDistanceConstraint> largeConstraints;
-
-        std::vector<DownYConstraint> downConstraints;
-
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
@@ -88,6 +80,13 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void AddForceByInput(sf::Event event);
         void AddForceAirResistance();
         void AddForceGravity();
+
+        std::vector<PhysicPoint> points;
+        std::vector<AbsoluteConstraint> constraints;
+        std::vector<SpringConstraint> springs;
+        std::vector<SmallerDistanceConstraint> smallConstraints;
+        std::vector<LargerDistanceConstraint> largeConstraints;
+        std::vector<DownYConstraint> downConstraints;
 };
 
 
