@@ -1,5 +1,5 @@
 #ifndef H_MANAGERTEMPLATECLASS
-#define MANAGERTEMPLATECLASS
+#define H_MANAGERTEMPLATECLASS
 
 #include <SFML/Graphics.hpp>
 
@@ -15,11 +15,11 @@
 template <typename Child>
 class Manager {
     protected:
-        std::vector<Child> controlledObjects;
+        std::vector<Child> controlledComponents;
 
     public:
-        virtual Child* AddNewControlledObject(Child args)   = 0;
-        virtual Child* GetControlledObject(int idx) = 0;
+        virtual Child* AddNewControlledComponent(Child args)   = 0;
+        virtual Child* GetControlledComponent(int idx) = 0;
 };
 
 #endif

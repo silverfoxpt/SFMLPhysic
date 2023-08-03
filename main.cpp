@@ -28,8 +28,8 @@ Rand Randomize::rand;
 sf::RenderWindow window(sf::VideoMode(800, 800), "SFML Physic");
 sf::Clock deltaTime;
 
-GameobjectManager gameobjectManager;
-PhysicManager manager;
+//GameobjectManager gameobjectManager;
+PhysicManager physicManager;
 LSystem lsystem;
 Flowfield flowfield;
 
@@ -41,7 +41,14 @@ float GameManager::deltaTime                    = 1/300.0;
 sf::Vector2u GameManager::mainWindowSize        = sf::Vector2u(800, 800);
 sf::Vector2u GameManager::originalResolution    = sf::Vector2u(1920, 1080);
 
+//test vars
+GameObject test = GameObject(10, 10);
+
 void Test() {
+    
+}
+
+void LateTest() {
     
 }
 
@@ -57,18 +64,20 @@ void Initialize() {
     Test();
 
     GameManager::InitializeWindowWithResolution(&window);
-    gameobjectManager.Initialize(&window);
-    manager.Initialize(&window);
-    flowfield.Initialize(&window);
 
-    lsystem.Initialize(&window, &manager, &flowfield);
+    GameobjectManager::GetInstance()->Initialize(&window);
+    physicManager.Initialize(&window);
+    flowfield.Initialize(&window);
+    lsystem.Initialize(&window, &physicManager, &flowfield);
+
+    LateTest();
 }
 
 void Update(sf::Event event) {
     UpdateTest(event);
 
-    gameobjectManager.Update(event);
-    manager.Update(event);
+    GameobjectManager::GetInstance()->Update(event);
+    physicManager.Update(event);
     lsystem.Update(event);
     flowfield.Update(event);
 }
@@ -76,22 +85,22 @@ void Update(sf::Event event) {
 void Visualize(sf::Event event) {
     VisualizeTest(event);
 
-    gameobjectManager.Visualize(event);
-    manager.Visualize(event);
+    GameobjectManager::GetInstance()->Visualize(event);
+    physicManager.Visualize(event);
     lsystem.Visualize(event);
     flowfield.Visualize(event);
 }
 
 void LateUpdate() {
-    gameobjectManager.LateUpdate();
-    manager.LateUpdate();
+    GameobjectManager::GetInstance()->LateUpdate();
+    physicManager.LateUpdate();
     lsystem.LateUpdate();
     flowfield.LateUpdate();
 }
 
 void Reset() {
-    gameobjectManager.Reset();
-    manager.Reset();
+    GameobjectManager::GetInstance()->Reset();
+    physicManager.Reset();
     lsystem.Reset();
     flowfield.Reset();
 }

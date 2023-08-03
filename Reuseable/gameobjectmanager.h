@@ -26,10 +26,18 @@ class GameobjectManager: public Monobehaviour<sf::RenderWindow*> , public Manage
         void LateUpdate() override;
         void Reset() override;
 
-        GameObject* AddNewControlledObject(GameObject obj) override;
-        GameObject* GetControlledObject(int idx) override;
+        GameObject* AddNewControlledComponent(GameObject obj) override;
+        GameObject* GetControlledComponent(int idx) override;
+
+        static GameobjectManager* GetInstance() {
+            if (!instance) {
+                instance = new GameobjectManager();
+            }
+            return instance;
+        }
 
     private:
+        static GameobjectManager* instance;
         
 };
 

@@ -16,14 +16,21 @@
 #include "../Reuseable/gameobject.h"
 #include "../Reuseable/templateclass.h"
 #include "../Reuseable/drawshapes.h"
+#include "../Reuseable/gameobjectmanager.h"
 
 #include "../Physic/physicmanager.h"
 
-class Fish: Monobehaviour<sf::RenderWindow*> {
+class Fish: Monobehaviour<sf::RenderWindow*, GameobjectManager*, PhysicManager*> {
     public:
         sf::RenderWindow* window;
+        PhysicManager* physicManager;
+        GameobjectManager* gameobjectManager;
 
-        void Initialize(sf::RenderWindow* window) override;
+        //used var
+        PhysicPoint* physicPoint;
+        GameObject* gameObject;
+
+        void Initialize(sf::RenderWindow* window, GameobjectManager* gameobjectManager, PhysicManager* physicManager) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;

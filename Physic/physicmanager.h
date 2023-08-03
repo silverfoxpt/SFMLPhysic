@@ -49,6 +49,14 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
             return &this->points[idx];
         }
 
+        PhysicPoint* CreatePoint(PhysicPoint point) {
+            point.Initialize(this->window);
+            point.idx = this->points.size();
+            
+            this->points.push_back(point);
+            return this->getPoint(this->points.size() - 1);
+        }
+
         int addPoint(PhysicPoint point) {
             point.Initialize(this->window);
             point.idx = this->points.size();

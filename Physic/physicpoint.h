@@ -17,6 +17,10 @@
 #include "../Reuseable/templateclass.h"
 #include "../Reuseable/drawshapes.h"
 
+enum PhysicState {
+    
+};
+
 class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
     public:
         bool isStatic       = false;

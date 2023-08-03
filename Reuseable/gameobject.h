@@ -15,6 +15,7 @@
 #include "gameManager.h"
 #include "math.h"
 #include "templateclass.h"
+#include "componenttemplateclass.h"
 
 class GameObject : Monobehaviour<sf::RenderWindow*>{
     public:
@@ -24,8 +25,10 @@ class GameObject : Monobehaviour<sf::RenderWindow*>{
         sf::Vector2f position;
         sf::Vector2f scale;
         float rotation; //range 0-360
-
         int width, height;
+
+        //other components
+        std::vector<Component*> components;
 
         GameObject(int width, int height);
         void SetWorldPosition(sf::Vector2f position);
@@ -45,6 +48,12 @@ class GameObject : Monobehaviour<sf::RenderWindow*>{
         void Visualize(sf::Event event) override;
         void LateUpdate() override;
         void Reset() override;
+
+        void AddComponent(Component* comp) {
+            if (comp != nullptr) {
+                this->components.push_back(comp);
+            }
+        }
 
     private:
 };
