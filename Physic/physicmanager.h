@@ -44,28 +44,6 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
         void LateUpdate() override;
         void Reset() override;
 
-        /*PhysicPoint* getPoint(int idx) {
-            if (idx < 0 || idx >= (int) this->points.size()) {std::cout << "Point not found!"; return nullptr;}
-            return &this->points[idx];
-        }
-
-        PhysicPoint* CreatePoint(PhysicPoint point) {
-            point.Initialize(this->window);
-            point.idx = this->points.size();
-            
-            this->points.push_back(point);
-            return this->getPoint(this->points.size() - 1);
-        }
-
-        int addPoint(PhysicPoint point) {
-            point.Initialize(this->window);
-            point.idx = this->points.size();
-            
-            this->points.push_back(point);
-
-            return this->points.size() - 1;
-        }*/
-
         void addAbsoluteConstraint(AbsoluteConstraint constraint) {
             constraint.Initialize(this->window);
             this->constraints.push_back(constraint);
@@ -98,6 +76,13 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
         }
 
         void AddGroundConstraint();
+        
+        static PhysicManager* GetInstance() {
+            if (!instance) {
+                instance = new PhysicManager();
+            }
+            return instance;
+        }
 
     private:
         void TestInitialize();
@@ -116,6 +101,8 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
         std::vector<SmallerDistanceConstraint> smallConstraints;
         std::vector<LargerDistanceConstraint> largeConstraints;
         std::vector<DownYConstraint> downConstraints;
+
+        static PhysicManager* instance;
 };
 
 

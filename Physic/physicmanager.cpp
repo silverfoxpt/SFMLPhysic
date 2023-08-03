@@ -1,5 +1,7 @@
 #include "physicmanager.h"
 
+PhysicManager* PhysicManager::instance = nullptr;
+
 void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
     this->controlledComponents.reserve(30000);

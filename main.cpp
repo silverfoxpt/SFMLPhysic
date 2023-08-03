@@ -29,7 +29,7 @@ sf::RenderWindow window(sf::VideoMode(800, 800), "SFML Physic");
 sf::Clock deltaTime;
 
 //GameobjectManager gameobjectManager;
-PhysicManager physicManager;
+//PhysicManager physicManager;
 LSystem lsystem;
 Flowfield flowfield;
 
@@ -66,9 +66,9 @@ void Initialize() {
     GameManager::InitializeWindowWithResolution(&window);
 
     GameobjectManager::GetInstance()->Initialize(&window);
-    physicManager.Initialize(&window);
+    PhysicManager::GetInstance()->Initialize(&window);
     flowfield.Initialize(&window);
-    lsystem.Initialize(&window, &physicManager, &flowfield);
+    lsystem.Initialize(&window, PhysicManager::GetInstance(), &flowfield);
 
     LateTest();
 }
@@ -77,7 +77,7 @@ void Update(sf::Event event) {
     UpdateTest(event);
 
     GameobjectManager::GetInstance()->Update(event);
-    physicManager.Update(event);
+    PhysicManager::GetInstance()->Update(event);
     lsystem.Update(event);
     flowfield.Update(event);
 }
@@ -86,21 +86,21 @@ void Visualize(sf::Event event) {
     VisualizeTest(event);
 
     GameobjectManager::GetInstance()->Visualize(event);
-    physicManager.Visualize(event);
+    PhysicManager::GetInstance()->Visualize(event);
     lsystem.Visualize(event);
     flowfield.Visualize(event);
 }
 
 void LateUpdate() {
     GameobjectManager::GetInstance()->LateUpdate();
-    physicManager.LateUpdate();
+    PhysicManager::GetInstance()->LateUpdate();
     lsystem.LateUpdate();
     flowfield.LateUpdate();
 }
 
 void Reset() {
     GameobjectManager::GetInstance()->Reset();
-    physicManager.Reset();
+    PhysicManager::GetInstance()->Reset();
     lsystem.Reset();
     flowfield.Reset();
 }
