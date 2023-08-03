@@ -2,7 +2,7 @@
 
 void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
-    this->points.reserve(30000);
+    this->controlledComponents.reserve(30000);
 
     this->TestInitialize();
     if (this->enableGround) {
@@ -18,7 +18,7 @@ void PhysicManager::Update(sf::Event event) {
 
     this->AddForceAirResistance(); //always last
 
-    for (auto& point: this->points) {
+    for (auto& point: this->controlledComponents) {
         point.Update(event);
     }
 
@@ -46,7 +46,7 @@ void PhysicManager::Update(sf::Event event) {
 }
 
 void PhysicManager::Visualize(sf::Event event) {
-    for (auto& point: this->points) {
+    for (auto& point: this->controlledComponents) {
         //point.Visualize(event); 
     }
 
@@ -64,7 +64,7 @@ void PhysicManager::LateUpdate() {
 }
 
 void PhysicManager::Reset() {
-    this->points.clear();
+    this->controlledComponents.clear();
     this->constraints.clear();
     this->springs.clear();
     this->smallConstraints.clear();
@@ -90,7 +90,7 @@ void PhysicManager::TestSoftbody() {
             PhysicPoint p1 = PhysicPoint(1, pos, this->timeStep);
             p1.Initialize(this->window); 
 
-            pointIdx[i].push_back(counter); points.push_back(p1);
+            pointIdx[i].push_back(counter); controlledComponents.push_back(p1);
             counter++;
         }
     }
@@ -100,41 +100,41 @@ void PhysicManager::TestSoftbody() {
         for (int j = 0; j < 5; j++) {
             // Create top spring
             if (j > 0) {
-                SpringConstraint topSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i][j - 1]), 50, 2, 20);
+                SpringConstraint topSpring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i][j - 1]), 50, 2, 20);
                 topSpring.Initialize(this->window);
                 this->springs.push_back(topSpring);
             }
 
             // Create bottom spring
             if (j < 4) {
-                SpringConstraint bottomSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i][j + 1]), 50, 2, 20);
+                SpringConstraint bottomSpring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i][j + 1]), 50, 2, 20);
                 bottomSpring.Initialize(this->window);
                 this->springs.push_back(bottomSpring);
             }
 
             // Create left spring
             if (i > 0) {
-                SpringConstraint leftSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i - 1][j]), 50, 2, 20);
+                SpringConstraint leftSpring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i - 1][j]), 50, 2, 20);
                 leftSpring.Initialize(this->window);
                 this->springs.push_back(leftSpring);
             }
 
             // Create right spring
             if (i < 4) {
-                SpringConstraint rightSpring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i + 1][j]), 50, 2, 20);
+                SpringConstraint rightSpring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i + 1][j]), 50, 2, 20);
                 rightSpring.Initialize(this->window);
                 this->springs.push_back(rightSpring);
             }
 
             // Create two diagonal springs
             if (i > 0 && j > 0) {
-                SpringConstraint diag1Spring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i - 1][j - 1]), 70.71067, 2, 20);
+                SpringConstraint diag1Spring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i - 1][j - 1]), 70.71067, 2, 20);
                 diag1Spring.Initialize(this->window);
                 this->springs.push_back(diag1Spring);
             }
 
             if (i < 4 && j > 0) {
-                SpringConstraint diag2Spring(this->getPoint(pointIdx[i][j]), this->getPoint(pointIdx[i + 1][j - 1]), 70.71067, 2, 20);
+                SpringConstraint diag2Spring(this->GetControlledComponent(pointIdx[i][j]), this->GetControlledComponent(pointIdx[i + 1][j - 1]), 70.71067, 2, 20);
                 diag2Spring.Initialize(this->window);
                 this->springs.push_back(diag2Spring);
             }
@@ -147,43 +147,43 @@ void PhysicManager::TestSpringSystem() {
     PhysicPoint p1 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 400)), this->timeStep);
     p1.Initialize(this->window); 
     p1.isStatic = true;
-    this->points.push_back(p1);
+    this->controlledComponents.push_back(p1);
 
     PhysicPoint p2 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 450)), this->timeStep);
     p2.Initialize(this->window); 
-    this->points.push_back(p2);
+    this->controlledComponents.push_back(p2);
 
     PhysicPoint p3 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 500)), this->timeStep);
     p3.Initialize(this->window); 
-    this->points.push_back(p3);
+    this->controlledComponents.push_back(p3);
 
     PhysicPoint p4 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 510)), this->timeStep);
     p4.Initialize(this->window); 
-    this->points.push_back(p4);
+    this->controlledComponents.push_back(p4);
 
-    /*AbsoluteConstraint constraint(this->getPoint(0), this->getPoint(1), 50);
+    /*AbsoluteConstraint constraint(this->GetControlledComponent(0), this->GetControlledComponent(1), 50);
     this->addAbsoluteConstraint(constraint);
 
-    AbsoluteConstraint constraint2(this->getPoint(1), this->getPoint(2), 50);
+    AbsoluteConstraint constraint2(this->GetControlledComponent(1), this->GetControlledComponent(2), 50);
     this->addAbsoluteConstraint(constraint2); */
 
-    /*AbsoluteConstraint cosntraint3(this->getPoint(1), this->getPoint(3), 60);
+    /*AbsoluteConstraint cosntraint3(this->GetControlledComponent(1), this->GetControlledComponent(3), 60);
     cosntraint3.Initialize(this->window);
     this->constraints.push_back(cosntraint3);*/
 
-    SpringConstraint spring(this->getPoint(0), this->getPoint(1), 70, 2, 20);
+    SpringConstraint spring(this->GetControlledComponent(0), this->GetControlledComponent(1), 70, 2, 20);
     spring.Initialize(this->window);
     this->springs.push_back(spring);
 
-    SpringConstraint spring2(this->getPoint(1), this->getPoint(2), 70, 2, 20);
+    SpringConstraint spring2(this->GetControlledComponent(1), this->GetControlledComponent(2), 70, 2, 20);
     spring2.Initialize(this->window);
     this->springs.push_back(spring2);
 
-    /*SmallerDistanceConstraint smallCon(25, this->getPoint(0), this->getPoint(1));
+    /*SmallerDistanceConstraint smallCon(25, this->GetControlledComponent(0), this->GetControlledComponent(1));
     smallCon.Initialize(this->window);
     this->smallConstraints.push_back(smallCon);*/
 
-    /*LargerDistanceConstraint largeCon(100, this->getPoint(0), this->getPoint(1));
+    /*LargerDistanceConstraint largeCon(100, this->GetControlledComponent(0), this->GetControlledComponent(1));
     largeCon.Initialize(this->window);
     this->largeConstraints.push_back(largeCon);*/
 }
@@ -193,14 +193,14 @@ void PhysicManager::TestUpdate() {
 }
 
 void PhysicManager::AddGroundConstraint() {
-    for (int i = 0; i < (int) this->points.size(); i++) {
-        DownYConstraint yConstraint(this->getPoint(i), this->groundHeightValue);
+    for (int i = 0; i < (int) this->controlledComponents.size(); i++) {
+        DownYConstraint yConstraint(this->GetControlledComponent(i), this->groundHeightValue);
         this->downConstraints.push_back(yConstraint);
     }
 }
 
 void PhysicManager::AddForceAirResistance() {
-    for (auto& point: this->points) {
+    for (auto& point: this->controlledComponents) {
         float length = Math::Length(point.velocity);
 
         auto p = Math::scaleVec(Math::normalizeVec(point.velocity), -this->dampingCoefficient * length); 
@@ -209,32 +209,32 @@ void PhysicManager::AddForceAirResistance() {
 }
 
 void PhysicManager::AddForceGravity() {
-    for (auto& point: this->points) {
+    for (auto& point: this->controlledComponents) {
         point.AddForce(sf::Vector2f(0.0, -this->gravityCoefficient * point.mass));
     }
 }
 
 void PhysicManager::AddForceByInput(sf::Event event) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        for (auto& point: this->points) {
+        for (auto& point: this->controlledComponents) {
             point.AddForce(sf::Vector2f(2, 0));
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        for (auto& point: this->points) {
+        for (auto& point: this->controlledComponents) {
             point.AddForce(sf::Vector2f(-2, 0));
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        for (auto& point: this->points) {
+        for (auto& point: this->controlledComponents) {
             point.AddForce(sf::Vector2f(0, 20));
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        for (auto& point: this->points) {
+        for (auto& point: this->controlledComponents) {
             point.AddForce(sf::Vector2f(0, -20));
         }
     }

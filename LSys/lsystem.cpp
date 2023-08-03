@@ -10,7 +10,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager,
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    //this->CreatePhysicTree();
+    this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -121,19 +121,19 @@ void LSystem::CreatePhysicTree() {
 
         int idx1 = -1;
         if (counter == 0) {
-            idx1 = this->manager->addPoint(phy1);
+            idx1 = this->manager->AddNewControlledComponentReturnIdx(phy1);
         } else {
             idx1 = parentSegmentLastPointIdx[line.previousSegmentIndex];
         }
-        int idx2 = this->manager->addPoint(phy2);
-        int idx3 = this->manager->addPoint(phy3);
+        int idx2 = this->manager->AddNewControlledComponentReturnIdx(phy2);
+        int idx3 = this->manager->AddNewControlledComponentReturnIdx(phy3);
 
         //connect with absolute constraint between 3 points
-        AbsoluteConstraint c1 = AbsoluteConstraint(this->manager->getPoint(idx1), this->manager->getPoint(idx2), 
+        AbsoluteConstraint c1 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx2), 
             this->lineLength / 2.0); c1.display = false;
-        AbsoluteConstraint c2 = AbsoluteConstraint(this->manager->getPoint(idx2), this->manager->getPoint(idx3), 
+        AbsoluteConstraint c2 = AbsoluteConstraint(this->manager->GetControlledComponent(idx2), this->manager->GetControlledComponent(idx3), 
             this->lineLength / 2.0); c2.display = false;
-        AbsoluteConstraint c3 = AbsoluteConstraint(this->manager->getPoint(idx1), this->manager->getPoint(idx3), 
+        AbsoluteConstraint c3 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx3), 
             this->lineLength);
         c3.display = true;
 
@@ -145,8 +145,8 @@ void LSystem::CreatePhysicTree() {
         //add spring constraint
         if (counter != 0) {
             //anchor to each other
-            auto mCurrent   = this->manager->getPoint(idx2);
-            auto mPrev      = this->manager->getPoint(parentSegmentMiddlePointIdx[line.previousSegmentIndex]);
+            auto mCurrent   = this->manager->GetControlledComponent(idx2);
+            auto mPrev      = this->manager->GetControlledComponent(parentSegmentMiddlePointIdx[line.previousSegmentIndex]);
             AbsoluteConstraint m1 = AbsoluteConstraint(mCurrent, mPrev, 
                 Math::Distance(mCurrent->currentPosition, mPrev->currentPosition)); m1.display = true;
             this->manager->addAbsoluteConstraint(m1);
@@ -160,14 +160,14 @@ void LSystem::CreatePhysicTree() {
             auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
             auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
 
-            int idxAnchor       = this->manager->addPoint(pAnchor);     
-            int idxCounterAnchor = this->manager->addPoint(pCounterAnchor);      
+            int idxAnchor       = this->manager->AddNewControlledComponentReturnIdx(pAnchor);     
+            int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
 
-            SpringConstraint anchorConstraint = SpringConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxAnchor),
+            SpringConstraint anchorConstraint = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxAnchor),
                 Math::Distance(anchorPos, phy3.currentPosition), 2, 20); 
             anchorConstraint.display = false;
 
-            SpringConstraint anchorConstraint2 = SpringConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxCounterAnchor),
+            SpringConstraint anchorConstraint2 = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxCounterAnchor),
                 Math::Distance(anchorCounterPos, phy3.currentPosition), 2, 20); 
             anchorConstraint2.display = false;
 
@@ -182,14 +182,14 @@ void LSystem::CreatePhysicTree() {
             auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
             auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
 
-            int idxAnchor       = this->manager->addPoint(pAnchor);     
-            int idxCounterAnchor = this->manager->addPoint(pCounterAnchor);      
+            int idxAnchor       = this->manager->AddNewControlledComponentReturnIdx(pAnchor);     
+            int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
             
-            AbsoluteConstraint anchorConstraint = AbsoluteConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxAnchor),
+            AbsoluteConstraint anchorConstraint = AbsoluteConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxAnchor),
                 Math::Distance(anchorPos, phy3.currentPosition)); 
             anchorConstraint.display = false;
 
-            AbsoluteConstraint anchorConstraint2 = AbsoluteConstraint(this->manager->getPoint(idx3), this->manager->getPoint(idxCounterAnchor),
+            AbsoluteConstraint anchorConstraint2 = AbsoluteConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxCounterAnchor),
                 Math::Distance(anchorCounterPos, phy3.currentPosition)); 
             anchorConstraint2.display = false;
 
@@ -214,7 +214,7 @@ void LSystem::CreatePhysicTree() {
 
 void LSystem::UpdatePhysicTree() {
     for (auto endpoint: this->lastEndpointIndex) {
-        auto p = this->manager->getPoint(endpoint);
+        auto p = this->manager->GetControlledComponent(endpoint);
         /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             p->AddForce(sf::Vector2f(3.1, 0));
         }
@@ -227,7 +227,7 @@ void LSystem::UpdatePhysicTree() {
     }
 
     for (auto endpoint: this->allEndpointIndex) {
-        auto p = this->manager->getPoint(endpoint);
+        auto p = this->manager->GetControlledComponent(endpoint);
         /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             p->AddForce(sf::Vector2f(2, 0));
         }

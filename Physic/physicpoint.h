@@ -21,7 +21,7 @@ enum PhysicState {
     
 };
 
-class PhysicPoint : public Monobehaviour<sf::RenderWindow*>{
+class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component{
     public:
         bool isStatic       = false;
         float mass          = 1;

@@ -6,7 +6,7 @@ void Fish::Initialize(sf::RenderWindow* window, GameobjectManager* gameobjectMan
     this->physicManager = physicManager;
 
     //create stuffs
-    this->physicPoint = physicManager->CreatePoint(PhysicPoint());
+    //this->physicPoint = physicManager->CreatePoint(PhysicPoint());
 }
 
 void Fish::Update(sf::Event event) {

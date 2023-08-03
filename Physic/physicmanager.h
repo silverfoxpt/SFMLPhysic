@@ -24,7 +24,7 @@
 #include "inequalconstraint.h"
 #include "boundaryconstraint.h"
 
-class PhysicManager: Monobehaviour<sf::RenderWindow*> {
+class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
     public:
         sf::RenderWindow* window;
 
@@ -44,7 +44,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void LateUpdate() override;
         void Reset() override;
 
-        PhysicPoint* getPoint(int idx) {
+        /*PhysicPoint* getPoint(int idx) {
             if (idx < 0 || idx >= (int) this->points.size()) {std::cout << "Point not found!"; return nullptr;}
             return &this->points[idx];
         }
@@ -64,7 +64,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
             this->points.push_back(point);
 
             return this->points.size() - 1;
-        }
+        }*/
 
         void addAbsoluteConstraint(AbsoluteConstraint constraint) {
             constraint.Initialize(this->window);
@@ -74,6 +74,27 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void addSpringConstraint(SpringConstraint constraint) {
             constraint.Initialize(this->window);
             this->springs.push_back(constraint);
+        }
+
+        PhysicPoint* AddNewControlledComponent(PhysicPoint point) override{
+            point.Initialize(this->window);
+            point.idx = this->controlledComponents.size();
+            
+            this->controlledComponents.push_back(point);
+            return this->GetControlledComponent(this->controlledComponents.size() - 1);
+        }
+
+        int AddNewControlledComponentReturnIdx(PhysicPoint point) {
+            point.Initialize(this->window);
+            point.idx = this->controlledComponents.size();
+            
+            this->controlledComponents.push_back(point);
+            return point.idx;
+        }
+
+        PhysicPoint* GetControlledComponent(int idx) override{
+            if (idx < 0 || idx >= (int) this->controlledComponents.size()) {std::cout << "Point not found!"; return nullptr;}
+            return &this->controlledComponents[idx];
         }
 
         void AddGroundConstraint();
@@ -89,7 +110,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*> {
         void AddForceAirResistance();
         void AddForceGravity();
 
-        std::vector<PhysicPoint> points;
+        //std::vector<PhysicPoint> points;
         std::vector<AbsoluteConstraint> constraints;
         std::vector<SpringConstraint> springs;
         std::vector<SmallerDistanceConstraint> smallConstraints;
