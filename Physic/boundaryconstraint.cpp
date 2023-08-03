@@ -14,7 +14,7 @@ void DownYConstraint::Initialize(sf::RenderWindow* window) {
 }
 
 void DownYConstraint::Update(sf::Event event) {
-    if (p1->isStatic) {return;}
+    if (p1->animationStatus == PhysicState::Static) {return;}
 
     float error = p1->currentPosition.y - this->yValue;
     auto p1Vec = sf::Vector2f(0, 1);

@@ -22,7 +22,7 @@ void AbsoluteConstraint::Update(sf::Event event) {
         return;
     }
 
-    if (p1->isStatic && p2->isStatic) {
+    if (p1->animationStatus == PhysicState::Static && p2->animationStatus == PhysicState::Static) {
         return;
     }
 
@@ -33,9 +33,9 @@ void AbsoluteConstraint::Update(sf::Event event) {
 
     //if (error > 0.1) {std::cout << error << '\n';}
 
-    if (p1->isStatic) {
+    if (p1->animationStatus == PhysicState::Static) {
         p2->currentPosition += Math::scaleVec(p2Vec, error);
-    } else if (p2->isStatic) {
+    } else if (p2->animationStatus == PhysicState::Static) {
         p1->currentPosition += Math::scaleVec(p1Vec, error);
     } else {
         p1->currentPosition += Math::scaleVec(p1Vec, error * this->p2MassPortion);

@@ -18,12 +18,14 @@
 #include "../Reuseable/drawshapes.h"
 
 enum PhysicState {
-    
+    Static = 0,
+    Kinematic = 1,
+    Dynamic = 2
 };
 
 class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
     public:
-        bool isStatic       = false;
+        PhysicState animationStatus = PhysicState::Dynamic;
         float mass          = 1;
         float timeStep      = 0.01;
         int idx             = -1; //debug purpose

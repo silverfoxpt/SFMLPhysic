@@ -18,7 +18,7 @@ void LargerDistanceConstraint::Initialize(sf::RenderWindow* window) {
 }
 
 void LargerDistanceConstraint::Update(sf::Event event) {
-    if (p1->isStatic && p2->isStatic) {
+    if (p1->animationStatus == PhysicState::Static && p2->animationStatus == PhysicState::Static) {
         return;
     }
 
@@ -27,9 +27,9 @@ void LargerDistanceConstraint::Update(sf::Event event) {
     auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition);
 
     if (error < 0) { //if distance smaller than lower limit
-        if (p1->isStatic) {
+        if (p1->animationStatus == PhysicState::Static) {
             p2->currentPosition += Math::scaleVec(p2Vec, error);
-        } else if (p2->isStatic) {
+        } else if (p2->animationStatus == PhysicState::Static) {
             p1->currentPosition += Math::scaleVec(p1Vec, error);
         } else {
             p1->currentPosition += Math::scaleVec(p1Vec, error * this->p2MassPortion);
@@ -68,7 +68,7 @@ void SmallerDistanceConstraint::Initialize(sf::RenderWindow* window) {
 }
 
 void SmallerDistanceConstraint::Update(sf::Event event) {
-    if (p1->isStatic && p2->isStatic) {
+    if (p1->animationStatus == PhysicState::Static && p2->animationStatus == PhysicState::Static) {
         return;
     }
 
@@ -77,9 +77,9 @@ void SmallerDistanceConstraint::Update(sf::Event event) {
     auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition);
 
     if (error > 0) { //if distance larger than lower limit
-        if (p1->isStatic) {
+        if (p1->animationStatus == PhysicState::Static) {
             p2->currentPosition += Math::scaleVec(p2Vec, error);
-        } else if (p2->isStatic) {
+        } else if (p2->animationStatus == PhysicState::Static) {
             p1->currentPosition += Math::scaleVec(p1Vec, error);
         } else {
             p1->currentPosition += Math::scaleVec(p1Vec, error * this->p2MassPortion);

@@ -148,7 +148,7 @@ void PhysicManager::TestSoftbody() {
 void PhysicManager::TestSpringSystem() {
     PhysicPoint p1 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 400)), this->timeStep);
     p1.Initialize(this->window); 
-    p1.isStatic = true;
+    p1.animationStatus = PhysicState::Static;
     this->controlledComponents.push_back(p1);
 
     PhysicPoint p2 = PhysicPoint(1, GameManager::convertScreenToWorld(sf::Vector2f(400, 450)), this->timeStep);

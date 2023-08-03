@@ -15,39 +15,15 @@ void PhysicPoint::Initialize(sf::RenderWindow* window) {
 }
 
 void PhysicPoint::Update(sf::Event event) {
-    if (!this->isStatic) {
+    if (!this->animationStatus == PhysicState::Static) {
         auto tmp = this->currentPosition;
-        this->currentPosition = Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep);
+        this->currentPosition = Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep); // Error O(dt^4)
         this->previousPosition = tmp;
 
         this->acceleration = sf::Vector2f(0, 0); //reset acceleration
 
         // Update the velocity
-        this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep;
-        //std::cout << velocity.x << " " << velocity.y << '\n';
-
-        //euler intergration
-        /*this->velocity += this->acceleration * timeStep;
-        this->currentPosition += this->velocity * timeStep + (float) 0.5 * this->acceleration * timeStep * timeStep;*/
-
-        /*auto tmp = this->currentPosition;
-        this->currentPosition += Math::scaleVec((this->currentPosition - this->previousPosition), 0.995)  + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep);
-        this->previousPosition = tmp;
-        this->acceleration = sf::Vector2f(0, 0); //reset acceleration*/
-
-        /*auto newPos = this->currentPosition + this->velocity * this->timeStep + (float) 0.5 * this->acceleration * this->timeStep * this->timeStep;
-        auto newVel = this->velocity + this->acceleration * this->timeStep;
-
-        this->currentPosition = newPos;
-        this->velocity = newVel;
-        this->acceleration = sf::Vector2f(0, 0);
-
-        /*auto halfVelo = this->velocity + (float) 0.5 * this->acceleration * timeStep;
-        auto newPos = this->currentPosition + halfVelo * timeStep;
-        this->currentPosition = newPos;
-
-        this->velocity = halfVelo + (float) 0.5 * this->acceleration * timeStep;
-        this->acceleration = sf::Vector2f(0, 0);*/
+        this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep; // Error O(dt^2)
     }
 }
 

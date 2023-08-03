@@ -23,7 +23,7 @@ void SpringConstraint::Initialize(sf::RenderWindow* window) {
 }
 
 void SpringConstraint::Update(sf::Event event) {
-    if (p1->isStatic && p2->isStatic) {
+    if (p1->animationStatus == PhysicState::Static && p2->animationStatus == PhysicState::Static) {
         return;
     }
 
@@ -50,7 +50,7 @@ void SpringConstraint::Reset() {
 }
 
 void SpringConstraint::AddSpringForce() {
-    if (p1->isStatic && p2->isStatic) {
+    if (p1->animationStatus == PhysicState::Static && p2->animationStatus == PhysicState::Static) {
         return;
     }
 
@@ -58,9 +58,9 @@ void SpringConstraint::AddSpringForce() {
     auto p1Vec = Math::normalizeVec(p2->currentPosition - p1->currentPosition);
     auto p2Vec = Math::normalizeVec(p1->currentPosition - p2->currentPosition);
 
-    if (p1->isStatic) {
+    if (p1->animationStatus == PhysicState::Static) {
         p2->AddForce(Math::scaleVec(p2Vec, error * (this->springCoefficient)));
-    } else if (p2->isStatic) {
+    } else if (p2->animationStatus == PhysicState::Static) {
         p1->AddForce(Math::scaleVec(p1Vec, error * (this->springCoefficient)));
     } else {
         p1->AddForce(Math::scaleVec(p1Vec, error * (this->springCoefficient) * this->p2MassPortion));

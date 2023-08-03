@@ -10,7 +10,7 @@ void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager,
     this->dir           = Math::getUpVec();
 
     this->CreateTree();
-    //this->CreatePhysicTree();
+    this->CreatePhysicTree();
 }
 
 void LSystem::Update(sf::Event event) {
@@ -117,7 +117,7 @@ void LSystem::CreatePhysicTree() {
         PhysicPoint phy3 = PhysicPoint(0.01, p2, this->manager->timeStep);
         PhysicPoint phy2 = PhysicPoint(0.01, pmid, this->manager->timeStep);
 
-        if (counter == 0) {phy1.isStatic = true;}
+        if (counter == 0) {phy1.animationStatus = PhysicState::Static;}
 
         int idx1 = -1;
         if (counter == 0) {
@@ -157,8 +157,8 @@ void LSystem::CreatePhysicTree() {
             auto anchorPos      = sf::Vector2f(phy3.currentPosition.x + offset, this->manager->groundHeightValue);
             auto anchorCounterPos = sf::Vector2f(phy3.currentPosition.x - offset, this->manager->groundHeightValue);
 
-            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
-            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
+            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.animationStatus = PhysicState::Static;
+            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.animationStatus = PhysicState::Static;
 
             int idxAnchor       = this->manager->AddNewControlledComponentReturnIdx(pAnchor);     
             int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
@@ -179,8 +179,8 @@ void LSystem::CreatePhysicTree() {
             auto anchorPos      = sf::Vector2f(phy3.currentPosition.x + offset, this->manager->groundHeightValue);
             auto anchorCounterPos = sf::Vector2f(phy3.currentPosition.x - offset, this->manager->groundHeightValue);
 
-            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.isStatic = true;
-            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.isStatic = true;
+            auto pAnchor        = PhysicPoint(1, anchorPos, this->manager->timeStep); pAnchor.animationStatus = PhysicState::Static;
+            auto pCounterAnchor = PhysicPoint(1, anchorCounterPos, this->manager->timeStep); pCounterAnchor.animationStatus = PhysicState::Static;
 
             int idxAnchor       = this->manager->AddNewControlledComponentReturnIdx(pAnchor);     
             int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
