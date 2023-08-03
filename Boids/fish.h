@@ -20,17 +20,15 @@
 
 #include "../Physic/physicmanager.h"
 
-class Fish: Monobehaviour<sf::RenderWindow*, GameobjectManager*, PhysicManager*> {
+class Fish: Monobehaviour<sf::RenderWindow*> {
     public:
         sf::RenderWindow* window;
-        PhysicManager* physicManager;
-        GameobjectManager* gameobjectManager;
 
         //used var
         PhysicPoint* physicPoint;
         GameObject* gameObject;
 
-        void Initialize(sf::RenderWindow* window, GameobjectManager* gameobjectManager, PhysicManager* physicManager) override;
+        void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;

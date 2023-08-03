@@ -32,7 +32,7 @@ void GameobjectManager::Reset() {
 }
 
 GameObject* GameobjectManager::GetControlledComponent(int idx) {
-    if (idx < 0 || idx > (int) this->controlledComponents.size()) {return nullptr;}
+    if (idx < 0 || idx > (int) this->controlledComponents.size()) { std::cout << "NULL!" << '\n'; return nullptr;}
     return &this->controlledComponents[idx];
 }
 

@@ -4,7 +4,7 @@ PhysicManager* PhysicManager::instance = nullptr;
 
 void PhysicManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
-    this->controlledComponents.reserve(30000);
+    this->controlledComponents.reserve(100000);
 
     this->TestInitialize();
     if (this->enableGround) {

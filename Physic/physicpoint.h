@@ -21,7 +21,7 @@ enum PhysicState {
     
 };
 
-class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component{
+class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
     public:
         bool isStatic       = false;
         float mass          = 1;
@@ -43,8 +43,11 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component{
         void LateUpdate() override;
         void Reset() override;
 
-        PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep);
-        PhysicPoint() {}
+        PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep, GameObject* parent = nullptr); //no parent available through this
+        PhysicPoint(GameObject* parent) : Component(parent) {
+            //take stuff from gameobject   
+            this->previousPosition = this->currentPosition = parent->GetPosition();
+        }
 
         void AddForce(sf::Vector2f force);
 

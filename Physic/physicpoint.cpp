@@ -1,6 +1,6 @@
 #include "physicpoint.h"
 
-PhysicPoint::PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep) {
+PhysicPoint::PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep, GameObject* parent) : Component(parent) {
     this->mass = mass;
 
     this->currentPosition = currentPosition;

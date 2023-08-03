@@ -21,6 +21,8 @@
 
 #include "Reuseable/gameobjectmanager.h"
 
+#include "Boids/fish.h"
+
 //really early stuff initialization
 Rand Randomize::rand;
 
@@ -43,13 +45,14 @@ sf::Vector2u GameManager::originalResolution    = sf::Vector2u(1920, 1080);
 
 //test vars
 GameObject test = GameObject(10, 10);
+Fish fish;
 
 void Test() {
-    
+    //DO NOT PUT ANYTHING THAT NEEDS TO BE INITIALIZED BEFOREHAND IN THIS FUNCTION. TEST UNRELATED SIMPLE FUNCTIONS ONLY
 }
 
 void LateTest() {
-    
+    fish.Initialize(&window);
 }
 
 void UpdateTest(sf::Event event) {

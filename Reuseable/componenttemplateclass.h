@@ -14,8 +14,15 @@
 
 #include "managertemplateclass.h"
 
+class GameObject;
+
 class Component {
     public:
+        GameObject* parentObj;
+
+        Component(GameObject* parent) {
+            this->parentObj = parent;
+        }
 };
 
 #endif

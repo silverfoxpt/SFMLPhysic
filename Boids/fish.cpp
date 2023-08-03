@@ -1,12 +1,14 @@
 #include "fish.h"
 
-void Fish::Initialize(sf::RenderWindow* window, GameobjectManager* gameobjectManager, PhysicManager* physicManager) {
+void Fish::Initialize(sf::RenderWindow* window) {
     this->window = window;
-    this->gameobjectManager = gameobjectManager;
-    this->physicManager = physicManager;
 
     //create stuffs
-    //this->physicPoint = physicManager->CreatePoint(PhysicPoint());
+    this->gameObject = GameobjectManager::GetInstance()->AddNewControlledComponent(GameObject(10, 10));
+    this->gameObject->SetWorldPosition(sf::Vector2f(400, -400));
+    this->gameObject->SetColor(sf::Color::Red);
+
+    this->physicPoint = PhysicManager::GetInstance()->AddNewControlledComponent(PhysicPoint(this->gameObject));
 }
 
 void Fish::Update(sf::Event event) {
