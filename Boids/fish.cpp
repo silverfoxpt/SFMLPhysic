@@ -8,7 +8,7 @@ void Fish::Initialize(sf::RenderWindow* window) {
     this->gameObject->SetWorldPosition(sf::Vector2f(400, -400));
     this->gameObject->SetColor(sf::Color::Red);
 
-    this->physicPoint = PhysicManager::GetInstance()->AddNewControlledComponent(PhysicPoint(1, this->gameObject->GetPosition(), this->gameObject));
+    this->physicPoint = PhysicManager::GetInstance()->AddNewControlledComponent(PhysicPoint(1, this->gameObject->GetPosition(), PhysicManager::GetInstance()->timeStep, this->gameObject));
     this->physicPoint->animationStatus = PhysicState::Dynamic;
     
     //test

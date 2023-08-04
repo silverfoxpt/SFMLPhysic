@@ -17,7 +17,9 @@
 #include "../Reuseable/templateclass.h"
 #include "../Reuseable/drawshapes.h"
 
+// Include headers
 #include "physicpoint.h"
+
 #include "inequalconstraint.h"
 
 class SpringConstraint: Monobehaviour<sf::RenderWindow*> {
