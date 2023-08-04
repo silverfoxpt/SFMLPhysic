@@ -9,13 +9,13 @@ void Fish::Initialize(sf::RenderWindow* window) {
     this->gameObject->SetColor(sf::Color::Red);
 
     this->physicPoint = PhysicManager::GetInstance()->AddNewControlledComponent(PhysicPoint(1, this->gameObject->GetPosition(), PhysicManager::GetInstance()->timeStep, this->gameObject));
-    this->physicPoint->animationStatus = PhysicState::Dynamic;
+    this->physicPoint->animationStatus = PhysicState::Kinematic;
     
-    //test
-    //this->physicPoint->AddForce(sf::Vector2f(0.01, 0));
 }
 
 void Fish::Update(sf::Event event) {
+    //test
+    //this->physicPoint->AddForce(sf::Vector2f(1, 0));
 }
 
 void Fish::Visualize(sf::Event event) {

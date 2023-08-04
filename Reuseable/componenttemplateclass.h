@@ -13,15 +13,16 @@
 #include <chrono>
 
 #include "managertemplateclass.h"
+#include "gameobject.h"
 
-//class GameObject;
+class GameObject;
 
 class Component {
     public:
-        //GameObject* parentObj;
+        GameObject* parentObj;
 
-        Component(/*GameObject* parent*/) {
-            //this->parentObj = parent;
+        Component(GameObject* parent) {
+            this->parentObj = parent;
         }
 };
 

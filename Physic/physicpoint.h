@@ -48,10 +48,10 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
         void Reset() override;
 
         PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep, GameObject* parent = nullptr); //no parent available through this
-        /*PhysicPoint(GameObject* parent) : Component(parent) {
+        PhysicPoint(GameObject* parent) : Component(parent) {
             //take stuff from gameobject   
             this->previousPosition = this->currentPosition = parent->GetPosition();
-        }*/
+        }
 
         void AddForce(sf::Vector2f force);
 

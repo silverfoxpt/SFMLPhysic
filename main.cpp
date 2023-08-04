@@ -56,7 +56,7 @@ void LateTest() {
 }
 
 void UpdateTest(sf::Event event) {
-    
+    //fish.Update(event);
 }
 
 void VisualizeTest(sf::Event event) {

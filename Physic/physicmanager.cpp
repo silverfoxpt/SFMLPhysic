@@ -196,6 +196,8 @@ void PhysicManager::TestUpdate() {
 
 void PhysicManager::AddGroundConstraint() {
     for (int i = 0; i < (int) this->controlledComponents.size(); i++) {
+        if (this->GetControlledComponent(i)->animationStatus == PhysicState::Kinematic) {continue;}
+
         DownYConstraint yConstraint(this->GetControlledComponent(i), this->groundHeightValue);
         this->downConstraints.push_back(yConstraint);
     }
