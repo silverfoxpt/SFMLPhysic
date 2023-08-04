@@ -1,12 +1,12 @@
 #include "physicpoint.h"
 
-PhysicPoint::PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep, GameObject* parent) : Component(parent) {
+PhysicPoint::PhysicPoint(float mass, sf::Vector2f currentPosition, GameObject* parent) : Component(parent) {
     this->mass = mass;
 
     this->currentPosition = currentPosition;
     this->previousPosition = currentPosition;
 
-    this->timeStep = timeStep;
+    this->timeStep = PhysicManager::GetInstance()->timeStep;
     this->idx = -1;
 }
 
@@ -24,6 +24,8 @@ void PhysicPoint::Update(sf::Event event) {
 
         // Update the velocity
         this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep; // Error O(dt^2)
+
+        this->ModifyGameobject();
     }
 }
 
@@ -42,4 +44,13 @@ void PhysicPoint::Reset() {
 void PhysicPoint::AddForce(sf::Vector2f force) {
     this->acceleration  += Math::scaleVec(force, 1.0 / this->mass); //F = ma
     this->force         += force;
+}
+
+void PhysicPoint::ModifyGameobject() {
+    auto dir = this->velocity;
+    if (Math::CheckSimilarNumber(dir.x, 0)) {dir.x = 0;}
+    if (Math::CheckSimilarNumber(dir.y, 0)) {dir.y = 0;}
+
+    this->parentObj->SetWorldPosition(this->currentPosition);
+    this->parentObj->SetRotation(Math::angleBetweenVectors(Math::getUpVec(), dir));
 }

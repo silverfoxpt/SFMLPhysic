@@ -24,6 +24,8 @@
 #include "inequalconstraint.h"
 #include "boundaryconstraint.h"
 
+class PhysicPoint;
+
 class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
     public:
         sf::RenderWindow* window;

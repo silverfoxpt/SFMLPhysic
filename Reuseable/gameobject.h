@@ -55,6 +55,17 @@ class GameObject : Monobehaviour<sf::RenderWindow*>{
             }
         }
 
+        template<typename T>
+        T* GetComponent() {
+            for (Component* component : components) {
+                T* castedComponent = dynamic_cast<T*>(component);
+                if (castedComponent) {
+                    return castedComponent;
+                }
+            }
+            return nullptr;
+        }
+
     private:
 };
 

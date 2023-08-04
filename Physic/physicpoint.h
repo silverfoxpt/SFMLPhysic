@@ -17,11 +17,15 @@
 #include "../Reuseable/templateclass.h"
 #include "../Reuseable/drawshapes.h"
 
+#include "physicmanager.h"
+
 enum PhysicState {
     Static = 0,
     Kinematic = 1,
     Dynamic = 2
 };
+
+class PhysicManager;
 
 class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
     public:
@@ -45,7 +49,7 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
         void LateUpdate() override;
         void Reset() override;
 
-        PhysicPoint(float mass, sf::Vector2f currentPosition, float timeStep, GameObject* parent = nullptr); //no parent available through this
+        PhysicPoint(float mass, sf::Vector2f currentPosition, GameObject* parent = nullptr); //no parent available through this
         PhysicPoint(GameObject* parent) : Component(parent) {
             //take stuff from gameobject   
             this->previousPosition = this->currentPosition = parent->GetPosition();
@@ -54,7 +58,7 @@ class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
         void AddForce(sf::Vector2f force);
 
     private:
-        void VerletUpdate();
+        void ModifyGameobject();
 };
 
 #endif
