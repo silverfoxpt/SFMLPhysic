@@ -10,12 +10,10 @@ void Fish::Initialize(sf::RenderWindow* window) {
 
     this->physicPoint = PhysicManager::GetInstance()->AddNewControlledComponent(PhysicPoint(1, this->gameObject->GetPosition(), PhysicManager::GetInstance()->timeStep, this->gameObject));
     this->physicPoint->animationStatus = PhysicState::Kinematic;
-    
 }
 
 void Fish::Update(sf::Event event) {
-    //test
-    //this->physicPoint->AddForce(sf::Vector2f(1, 0));
+    
 }
 
 void Fish::Visualize(sf::Event event) {
