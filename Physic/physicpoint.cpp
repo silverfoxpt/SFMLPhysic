@@ -16,14 +16,19 @@ void PhysicPoint::Initialize(sf::RenderWindow* window) {
 
 void PhysicPoint::Update(sf::Event event) {
     if (!this->animationStatus == PhysicState::Static) {
-        auto tmp = this->currentPosition;
-        this->currentPosition = Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep); // Error O(dt^4)
-        this->previousPosition = tmp;
+        if (this->intergrationMethod == IntergrationMethod::Verlet) {
+            auto tmp = this->currentPosition;
+            this->currentPosition = Math::scaleVec(this->currentPosition, 2) - this->previousPosition + Math::scaleVec(this->acceleration, this->timeStep * this->timeStep); // Error O(dt^4)
+            this->previousPosition = tmp;
 
-        this->acceleration = sf::Vector2f(0, 0); //reset acceleration
+            this->acceleration = sf::Vector2f(0, 0); //reset acceleration
 
-        // Update the velocity
-        this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep; // Error O(dt^2)
+            // Update the velocity
+            this->velocity = (this->currentPosition - this->previousPosition) / this->timeStep; // Error O(dt^2)
+        } else if (this->intergrationMethod == IntergrationMethod::Euler) {
+            this->velocity += this->acceleration * this->timeStep;
+            this->currentPosition += this->velocity * this->timeStep;
+        }
 
         if (this->parentObj != nullptr) {
             this->ModifyGameobject();
@@ -52,6 +57,8 @@ void PhysicPoint::ModifyGameobject() {
     auto dir = this->velocity;
     if (Math::CheckSimilarNumber(dir.x, 0)) {dir.x = 0;}
     if (Math::CheckSimilarNumber(dir.y, 0)) {dir.y = 0;}
+
+    //std::cout << dir.x << " " << dir.y << '\n';
 
     this->parentObj->SetWorldPosition(this->currentPosition);
     this->parentObj->SetRotation(Math::angleBetweenVectors(Math::getUpVec(), dir));

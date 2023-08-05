@@ -25,9 +25,16 @@ enum PhysicState {
     Dynamic = 2 
 };
 
+enum IntergrationMethod {
+    Verlet = 0,
+    Euler = 1
+};
+
 class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
     public:
         PhysicState animationStatus = PhysicState::Dynamic;
+        IntergrationMethod intergrationMethod = IntergrationMethod::Verlet;
+        
         float mass          = 1;
         float timeStep      = 0.01;
         int idx             = -1; //debug purpose

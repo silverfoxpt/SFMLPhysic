@@ -52,11 +52,11 @@ void Test() {
 }
 
 void LateTest() {
-    //fish.Initialize(&window);
+    fish.Initialize(&window);
 }
 
 void UpdateTest(sf::Event event) {
-    //fish.Update(event);
+    fish.Update(event);
 }
 
 void VisualizeTest(sf::Event event) {
