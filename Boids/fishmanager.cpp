@@ -1,5 +1,7 @@
 #include "fishmanager.h"
 
+FishManager* FishManager::instance = nullptr;
+
 void FishManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
     this->fishes.reserve(100000);
