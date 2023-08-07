@@ -34,15 +34,15 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         std::vector<PhysicPoint*> fishPhysics;
 
         //settings
-        float avoidFactor = 0.05f;
-        float matchingFactor = 0.05f;
+        float avoidFactor = 0.12f;
+        float matchingFactor = 0.007f;
         float centeringFactor = 0.0005f;
 
-        float protectedRange = 20;
-        float visualRange = 80;
+        float protectedRange = 8;
+        float visualRange = 40;
 
-        float minVelocity = 5; //test
-        float maxVelocity = 15; //test
+        float minVelocity = 10; //test
+        float maxVelocity = 20; //test
 
         float leftMargin = 100;
         float rightMargin = /*GameManager::mainWindowSize.x - leftMargin*/ 700;

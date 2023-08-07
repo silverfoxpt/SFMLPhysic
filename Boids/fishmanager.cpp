@@ -5,16 +5,16 @@ FishManager* FishManager::instance = nullptr;
 void FishManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
     this->fishes.reserve(100000);
-    this->SpawnFish();
+    //this->SpawnFish();
 }
 
 void FishManager::Update(sf::Event event) {
-    /*this->Seperation();
+    this->Seperation();
     this->Alignment();
-    this->Cohesion();*/
+    this->Cohesion();
     
-    //this->TurnOnEdge();
-    //this->LimitVelocity();
+    this->TurnOnEdge();
+    this->LimitVelocity();
 }
 
 void FishManager::Visualize(sf::Event event) {
