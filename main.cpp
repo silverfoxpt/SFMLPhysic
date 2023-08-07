@@ -22,6 +22,7 @@
 #include "Reuseable/gameobjectmanager.h"
 
 #include "Boids/fish.h"
+#include "Boids/fishmanager.h"
 
 //really early stuff initialization
 Rand Randomize::rand;
@@ -52,11 +53,11 @@ void Test() {
 }
 
 void LateTest() {
-    fish.Initialize(&window);
+    //fish.Initialize(&window);
 }
 
 void UpdateTest(sf::Event event) {
-    fish.Update(event);
+    //fish.Update(event);
 }
 
 void VisualizeTest(sf::Event event) {
@@ -72,6 +73,7 @@ void Initialize() {
     PhysicManager::GetInstance()->Initialize(&window);
     flowfield.Initialize(&window);
     lsystem.Initialize(&window, PhysicManager::GetInstance(), &flowfield);
+    FishManager::GetInstance()->Initialize(&window);
 
     LateTest();
 }
@@ -83,6 +85,7 @@ void Update(sf::Event event) {
     PhysicManager::GetInstance()->Update(event);
     lsystem.Update(event);
     flowfield.Update(event);
+    FishManager::GetInstance()->Update(event);
 }
 
 void Visualize(sf::Event event) {
@@ -92,6 +95,7 @@ void Visualize(sf::Event event) {
     PhysicManager::GetInstance()->Visualize(event);
     lsystem.Visualize(event);
     flowfield.Visualize(event);
+    FishManager::GetInstance()->Visualize(event);
 }
 
 void LateUpdate() {
@@ -99,6 +103,7 @@ void LateUpdate() {
     PhysicManager::GetInstance()->LateUpdate();
     lsystem.LateUpdate();
     flowfield.LateUpdate();
+    FishManager::GetInstance()->LateUpdate();
 }
 
 void Reset() {
@@ -106,6 +111,7 @@ void Reset() {
     PhysicManager::GetInstance()->Reset();
     lsystem.Reset();
     flowfield.Reset();
+    FishManager::GetInstance()->Reset();
 }
 
 void MainGameLoop() {

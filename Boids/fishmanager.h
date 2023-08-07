@@ -30,6 +30,19 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         int numFish = 200;
 
         std::vector<Fish> fishes;
+        std::vector<GameObject*> fishObjects;
+        std::vector<PhysicPoint*> fishPhysics;
+
+        //settings
+        float avoidFactor = 0.05f;
+        float matchingFactor = 0.05f;
+        float centeringFactor = 0.0005f;
+
+        float protectedRange = 20;
+        float visualRange = 100;
+
+        float minVelocity = 0.01; //test
+        float maxVelocity = 0.03; //test
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -44,13 +57,22 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
             return instance;
         }
 
+        Fish* getFish(int idx) {
+            if (idx < 0 || idx >= (int) this->fishes.size()) {
+                std::cout << "Fish not found!" << '\n';
+                return nullptr;
+            }
+            return &this->fishes[idx];
+        }
+
     private:
         static FishManager* instance;
 
         void SpawnFish();
 
         void Seperation();
-        
+        void Alignment();        
+        void Cohesion();
 };
 
 #endif
