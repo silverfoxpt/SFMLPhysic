@@ -9,9 +9,12 @@ void FishManager::Initialize(sf::RenderWindow* window) {
 }
 
 void FishManager::Update(sf::Event event) {
-    this->Seperation();
+    /*this->Seperation();
     this->Alignment();
-    this->Cohesion();
+    this->Cohesion();*/
+    
+    this->TurnOnEdge();
+    //this->LimitVelocity();
 }
 
 void FishManager::Visualize(sf::Event event) {
@@ -104,5 +107,39 @@ void FishManager::Cohesion() {
         //update velocity
         averagePos /= (float) numNeighbor;
         this->fishPhysics[i]->velocity += (averagePos - fish->GetPosition()) * centeringFactor;
+    }
+}
+
+void FishManager::TurnOnEdge() {
+    for (int i = 0; i < (int) this->fishes.size(); i++) {
+        auto fish = this->fishObjects[i];
+        auto phys = this->fishPhysics[i];
+
+        auto velo = phys->velocity;
+        auto pos = fish->GetPosition();
+        if (pos.x < this->leftMargin) {
+            velo.x += turnFactor;
+        } else if (pos.x > this->rightMargin) {
+            velo.x -= turnFactor;
+        }
+
+        if (pos.y < this->topMargin) {
+            velo.y += turnFactor;
+        } else if (pos.y > this->bottomMargin) {
+            velo.y -= turnFactor;
+        }
+
+        phys->velocity = velo;
+    }
+}
+
+void FishManager::LimitVelocity() {
+     for (int i = 0; i < (int) this->fishes.size(); i++) {
+        auto phys = this->fishPhysics[i];
+
+        auto velo = phys->velocity;
+        float len = Math::Length(velo); len = Math::clamp(this->minVelocity, this->maxVelocity, len);
+
+        phys->velocity = Math::normalizeVec(velo) * len;
     }
 }

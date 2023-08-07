@@ -44,6 +44,14 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         float minVelocity = 0.001; //test
         float maxVelocity = 0.003; //test
 
+        float leftMargin = 100;
+        float rightMargin = /*GameManager::mainWindowSize.x - leftMargin*/ 700;
+        float topMargin = -100;
+        float bottomMargin = /*-(GameManager::mainWindowSize.y - topMargin)*/ -700; 
+
+        float turnFactor = 0.2f;
+
+        //functions
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
@@ -73,6 +81,8 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         void Seperation();
         void Alignment();        
         void Cohesion();
+        void TurnOnEdge();
+        void LimitVelocity();
 };
 
 #endif
