@@ -28,6 +28,8 @@ void PhysicPoint::Update(sf::Event event) {
         } else if (this->intergrationMethod == IntergrationMethod::Euler) {
             this->velocity += this->acceleration * this->timeStep;
             this->currentPosition += this->velocity * this->timeStep;
+
+            //std::cout << velocity.x << " " << velocity.y << '\n';
         }
 
         if (this->parentObj != nullptr) {
@@ -55,10 +57,12 @@ void PhysicPoint::AddForce(sf::Vector2f force) {
 
 void PhysicPoint::ModifyGameobject() {
     auto dir = this->velocity;
-    if (Math::CheckSimilarNumber(dir.x, 0)) {dir.x = 0;}
-    if (Math::CheckSimilarNumber(dir.y, 0)) {dir.y = 0;}
 
     //std::cout << dir.x << " " << dir.y << '\n';
+    if (std::abs(dir.x) < 0.00001) {dir.x = 0;}
+    if (std::abs(dir.y) < 0.00001) {dir.y = 0;}
+
+    //std::cout << this->currentPosition.x << " " << this->currentPosition.y << '\n';
 
     this->parentObj->SetWorldPosition(this->currentPosition);
     this->parentObj->SetRotation(Math::angleBetweenVectors(Math::getUpVec(), dir));

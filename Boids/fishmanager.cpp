@@ -13,7 +13,7 @@ void FishManager::Update(sf::Event event) {
     this->Alignment();
     this->Cohesion();*/
     
-    this->TurnOnEdge();
+    //this->TurnOnEdge();
     //this->LimitVelocity();
 }
 
@@ -54,8 +54,8 @@ void FishManager::Seperation() {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 
-            if (Math::Distance(fish->GetPosition(), other->GetPosition()) <= this->protectedRange) {
-                close += fish->GetPosition() - other->GetPosition();
+            if (Math::Distance(fish->GetWorldPosition(), other->GetWorldPosition()) <= this->protectedRange) {
+                close += fish->GetWorldPosition() - other->GetWorldPosition();
             }
         }
 
@@ -74,7 +74,7 @@ void FishManager::Alignment() {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 
-            if (Math::Distance(fish->GetPosition(), other->GetPosition()) <= this->visualRange) {
+            if (Math::Distance(fish->GetWorldPosition(), other->GetWorldPosition()) <= this->visualRange) {
                 averageVelocity += this->fishPhysics[j]->velocity;
                 numNeighbor += 1;
             }
@@ -97,8 +97,8 @@ void FishManager::Cohesion() {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 
-            if (Math::Distance(fish->GetPosition(), other->GetPosition()) <= this->visualRange) {
-                averagePos += other->GetPosition();
+            if (Math::Distance(fish->GetWorldPosition(), other->GetWorldPosition()) <= this->visualRange) {
+                averagePos += other->GetWorldPosition();
                 numNeighbor += 1;
             }
         }
@@ -106,7 +106,7 @@ void FishManager::Cohesion() {
 
         //update velocity
         averagePos /= (float) numNeighbor;
-        this->fishPhysics[i]->velocity += (averagePos - fish->GetPosition()) * centeringFactor;
+        this->fishPhysics[i]->velocity += (averagePos - fish->GetWorldPosition()) * centeringFactor;
     }
 }
 
@@ -116,17 +116,18 @@ void FishManager::TurnOnEdge() {
         auto phys = this->fishPhysics[i];
 
         auto velo = phys->velocity;
-        auto pos = fish->GetPosition();
+        auto pos = fish->GetWorldPosition();
+
         if (pos.x < this->leftMargin) {
             velo.x += turnFactor;
         } else if (pos.x > this->rightMargin) {
             velo.x -= turnFactor;
         }
 
-        if (pos.y < this->topMargin) {
-            velo.y += turnFactor;
-        } else if (pos.y > this->bottomMargin) {
+        if (pos.y > this->topMargin) {
             velo.y -= turnFactor;
+        } else if (pos.y < this->bottomMargin) {
+            velo.y += turnFactor;
         }
 
         phys->velocity = velo;

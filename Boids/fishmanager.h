@@ -41,8 +41,8 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         float protectedRange = 20;
         float visualRange = 80;
 
-        float minVelocity = 0.001; //test
-        float maxVelocity = 0.003; //test
+        float minVelocity = 5; //test
+        float maxVelocity = 15; //test
 
         float leftMargin = 100;
         float rightMargin = /*GameManager::mainWindowSize.x - leftMargin*/ 700;

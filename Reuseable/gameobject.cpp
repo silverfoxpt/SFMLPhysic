@@ -74,7 +74,11 @@ void GameObject::RotateToVector(sf::Vector2f toVec) {
     this->Rotate(360 - (angle * 180 / pi)); //clockwise
 }
 
-sf::Vector2f GameObject::GetPosition() {
+sf::Vector2f GameObject::GetScreenPosition() {
+    return GameManager::convertWorldToScreen(this->position);
+}
+
+sf::Vector2f GameObject::GetWorldPosition() {
     return this->position;
 }
 

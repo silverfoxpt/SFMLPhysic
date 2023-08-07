@@ -40,7 +40,8 @@ class GameObject : Monobehaviour<sf::RenderWindow*>{
         void Rotate(float eulerAngle);
         void RotateToVector(sf::Vector2f vec);
         
-        sf::Vector2f GetPosition();
+        sf::Vector2f GetScreenPosition();
+        sf::Vector2f GetWorldPosition();
         sf::Vector2f GetNormalizeRotationVector();
 
         void Initialize(sf::RenderWindow* window) override;
