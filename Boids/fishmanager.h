@@ -39,10 +39,10 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         float centeringFactor = 0.0005f;
 
         float protectedRange = 20;
-        float visualRange = 100;
+        float visualRange = 80;
 
-        float minVelocity = 0.01; //test
-        float maxVelocity = 0.03; //test
+        float minVelocity = 0.001; //test
+        float maxVelocity = 0.003; //test
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;

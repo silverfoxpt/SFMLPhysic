@@ -38,16 +38,16 @@ void FishManager::SpawnFish() {
         this->fishPhysics.push_back(this->fishes[i].gameObject->GetComponent<PhysicPoint>());
 
         //start veloctity -> test
-        this->fishPhysics[i]->velocity = sf::Vector2f(0, 1) * this->minVelocity;
+        this->fishPhysics[i]->velocity = Math::getRandomDirectionVecWithAngleRange(1, 359) * this->minVelocity;
     }
 }
 
 void FishManager::Seperation() {
-    for (int i = 0; i < this->fishes.size(); i++) {
+    for (int i = 0; i < (int) this->fishes.size(); i++) {
         auto fish = this->fishObjects[i];
         sf::Vector2f close = sf::Vector2f(0, 0);
 
-        for (int j = 0; j < this->fishes.size(); j++) {
+        for (int j = 0;  j < (int) this->fishes.size(); j++) {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 
@@ -62,12 +62,12 @@ void FishManager::Seperation() {
 }
 
 void FishManager::Alignment() {
-    for (int i = 0; i < this->fishes.size(); i++) {
+    for (int i = 0; i < (int) this->fishes.size(); i++) {
         auto fish = this->fishObjects[i];
         sf::Vector2f averageVelocity = sf::Vector2f(0, 0);
         int numNeighbor = 0;
 
-        for (int j = 0; j < this->fishes.size(); j++) {
+        for (int j = 0; j < (int) this->fishes.size(); j++) {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 
@@ -85,12 +85,12 @@ void FishManager::Alignment() {
 }
 
 void FishManager::Cohesion() {
-    for (int i = 0; i < this->fishes.size(); i++) {
+    for (int i = 0; i < (int) this->fishes.size(); i++) {
         auto fish = this->fishObjects[i];
         sf::Vector2f averagePos = sf::Vector2f(0, 0);
         int numNeighbor = 0;
 
-        for (int j = 0; j < this->fishes.size(); j++) {
+        for (int j = 0; j < (int) this->fishes.size(); j++) {
             if (i == j) {continue;}
             auto other = this->fishObjects[j];
 

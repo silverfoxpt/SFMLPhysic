@@ -49,9 +49,11 @@ class GameObject : Monobehaviour<sf::RenderWindow*>{
         void LateUpdate() override;
         void Reset() override;
 
-        void AddComponent(Component* comp) {
-            if (comp != nullptr) {
-                this->components.push_back(comp);
+        template<typename X>
+        void AddComponent(X* comp) {
+            Component* castedComponent = dynamic_cast<Component*>(comp);
+            if (castedComponent) {
+                this->components.push_back(castedComponent);
             }
         }
 

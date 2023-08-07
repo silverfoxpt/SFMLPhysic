@@ -57,7 +57,8 @@ void LateTest() {
 }
 
 void UpdateTest(sf::Event event) {
-    //fish.Update(event);
+    //fish.physicPoint->AddForce(sf::Vector2f(0.01, 0));
+    //fish.gameObject->GetComponent<PhysicPoint>()->AddForce(sf::Vector2f(0.01, 0));
 }
 
 void VisualizeTest(sf::Event event) {

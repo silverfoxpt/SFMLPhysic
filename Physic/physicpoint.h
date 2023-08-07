@@ -30,7 +30,7 @@ enum IntergrationMethod {
     Euler = 1
 };
 
-class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, Component {
+class PhysicPoint : public Monobehaviour<sf::RenderWindow*>, public Component {
     public:
         PhysicState animationStatus = PhysicState::Dynamic;
         IntergrationMethod intergrationMethod = IntergrationMethod::Verlet;
