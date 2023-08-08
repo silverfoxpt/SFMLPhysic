@@ -36,7 +36,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
         float gravityCoefficient = 9.81; //old is 9.81 - Earth gravity
 
         bool enableGround = true; //old is true
-        float groundHeightValue = -750;
+        float groundHeightValue = -800;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;

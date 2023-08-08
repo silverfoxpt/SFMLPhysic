@@ -65,7 +65,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
         std::vector<Segment> lines;
 
         //settings
-        sf::Vector2f startPos   = sf::Vector2f(400, -750); //old is sf::Vector2f(400, -700);
+        sf::Vector2f startPos   = sf::Vector2f(400, -800); //old is sf::Vector2f(400, -700);
         sf::Color color         = sf::Color::White;
         float lineSize          = 5;
         float lineLength        = 3; //old is 3

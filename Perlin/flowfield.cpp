@@ -11,21 +11,35 @@ void Flowfield::Initialize(sf::RenderWindow* window) {
     this->col = GameManager::mainWindowSize.x / this->cellSize; 
 
     //calculate field values
+    this->angleValues.clear();
     for (int i = 0; i < row; i++) {
+        this->angleValues.push_back(std::vector<float>());
         for (int j = 0; j < col; j++) {
             //calculate angle
-            float angle = this->noise.noise(i * 0.02, j * 0.02);
+            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * 0.02, (j + this->clock.getElapsedTime().asSeconds()) * 0.02);
             angle += 1; //range from 0 -> 2
             angle *= 180; //range from 0 -> 360
 
             //save angle
-            this->angleValues.push_back(std::vector<float>());
             this->angleValues[i].push_back(angle);
         }
     }
+
 }
 
 void Flowfield::Update(sf::Event event) {
+    //recalculate
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            //calculate angle
+            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * 0.02, (j + this->clock.getElapsedTime().asSeconds()) * 0.02);
+            angle += 1; //range from 0 -> 2
+            angle *= 180; //range from 0 -> 360
+
+            //save angle
+            this->angleValues[i][j] = (angle);
+        }
+    }
 }
 
 void Flowfield::Visualize(sf::Event event) {
