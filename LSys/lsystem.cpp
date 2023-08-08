@@ -100,22 +100,21 @@ void LSystem::DrawTree() {
 }
 
 void LSystem::CreatePhysicTree() {
-    int counter = 0;
-
     std::vector<int> parentSegmentLastPointIdx;
     parentSegmentLastPointIdx.resize(this->lines.size());
 
-    std::vector<int> parentSegmentMiddlePointIdx;
-    parentSegmentMiddlePointIdx.resize(this->lines.size());
+    //std::vector<int> parentSegmentMiddlePointIdx;
+    //parentSegmentMiddlePointIdx.resize(this->lines.size());
 
+    int counter = 0;
     for (auto& line: this->lines) {
         auto p1 = line.startPoint;
         auto p2 = line.endPoint;
-        auto pmid = Math::Middlepoint(p1, p2);
+        //auto pmid = Math::Middlepoint(p1, p2);
 
         PhysicPoint phy1 = PhysicPoint(0.01, p1, PhysicManager::GetInstance()->timeStep);
         PhysicPoint phy3 = PhysicPoint(0.01, p2, PhysicManager::GetInstance()->timeStep);
-        PhysicPoint phy2 = PhysicPoint(0.01, pmid, PhysicManager::GetInstance()->timeStep);
+        //PhysicPoint phy2 = PhysicPoint(0.01, pmid, PhysicManager::GetInstance()->timeStep);
 
         if (counter == 0) {phy1.animationStatus = PhysicState::Static;}
 
@@ -125,31 +124,31 @@ void LSystem::CreatePhysicTree() {
         } else {
             idx1 = parentSegmentLastPointIdx[line.previousSegmentIndex];
         }
-        int idx2 = this->manager->AddNewControlledComponentReturnIdx(phy2);
+        //int idx2 = this->manager->AddNewControlledComponentReturnIdx(phy2);
         int idx3 = this->manager->AddNewControlledComponentReturnIdx(phy3);
 
         //connect with absolute constraint between 3 points
-        AbsoluteConstraint c1 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx2), 
+        /*AbsoluteConstraint c1 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx2), 
             this->lineLength / 2.0); c1.display = false;
         AbsoluteConstraint c2 = AbsoluteConstraint(this->manager->GetControlledComponent(idx2), this->manager->GetControlledComponent(idx3), 
-            this->lineLength / 2.0); c2.display = false;
+            this->lineLength / 2.0); c2.display = false;*/
         AbsoluteConstraint c3 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx3), 
             this->lineLength);
         c3.display = true;
 
-        this->manager->addAbsoluteConstraint(c1);
-        this->manager->addAbsoluteConstraint(c2);
+        //this->manager->addAbsoluteConstraint(c1);
+        //this->manager->addAbsoluteConstraint(c2);
         this->manager->addAbsoluteConstraint(c3);
         
 
         //add spring constraint
-        if (counter != 0) {
+        if (counter != 0 /*&& counter % 3 != 0*/) {
             //anchor to each other
-            auto mCurrent   = this->manager->GetControlledComponent(idx2);
+            /*auto mCurrent   = this->manager->GetControlledComponent(idx2);
             auto mPrev      = this->manager->GetControlledComponent(parentSegmentMiddlePointIdx[line.previousSegmentIndex]);
             AbsoluteConstraint m1 = AbsoluteConstraint(mCurrent, mPrev, 
                 Math::Distance(mCurrent->currentPosition, mPrev->currentPosition)); m1.display = true;
-            this->manager->addAbsoluteConstraint(m1);
+            this->manager->addAbsoluteConstraint(m1);*/
             
             //anchor to ground
             float offset        = (phy3.currentPosition.x > this->startPos.x) ? 50 : -50;
@@ -164,11 +163,11 @@ void LSystem::CreatePhysicTree() {
             int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
 
             SpringConstraint anchorConstraint = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxAnchor),
-                Math::Distance(anchorPos, phy3.currentPosition), 2, 20); 
+                Math::Distance(anchorPos, phy3.currentPosition), 3, 20); 
             anchorConstraint.display = false;
 
             SpringConstraint anchorConstraint2 = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxCounterAnchor),
-                Math::Distance(anchorCounterPos, phy3.currentPosition), 2, 20); 
+                Math::Distance(anchorCounterPos, phy3.currentPosition), 3, 20); 
             anchorConstraint2.display = false;
 
             this->manager->addSpringConstraint(anchorConstraint);
@@ -198,18 +197,17 @@ void LSystem::CreatePhysicTree() {
         }
 
         parentSegmentLastPointIdx[line.currentSegmentIndex] = idx3;
-        parentSegmentMiddlePointIdx[line.currentSegmentIndex] = idx2;
+        //parentSegmentMiddlePointIdx[line.currentSegmentIndex] = idx2;
 
         if (line.nextSegmentIndex == -1) {
             this->lastEndpointIndex.push_back(idx3);
         } else {
             this->allEndpointIndex.push_back(idx3);
         }
-        
 
         counter++;
     }
-    this->manager->Initialize(this->window);
+    //this->manager->Initialize(this->window);
 }
 
 void LSystem::UpdatePhysicTree() {
