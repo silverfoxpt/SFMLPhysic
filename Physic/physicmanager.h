@@ -30,7 +30,7 @@ class PhysicManager: Monobehaviour<sf::RenderWindow*>, Manager<PhysicPoint> {
 
         //used vars
         float timeStep = 0.06; //old is 0.06
-        int substep = 20;  //old is 30
+        int substep = 8;  //old is 30
 
         float dampingCoefficient = 0.02; //old is 0.1
         float gravityCoefficient = 9.81; //old is 9.81 - Earth gravity
