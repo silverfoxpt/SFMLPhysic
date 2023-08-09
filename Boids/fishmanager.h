@@ -27,7 +27,7 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        int numFish = 500;
+        int numFish = 250;
 
         std::vector<Fish> fishes;
         std::vector<GameObject*> fishObjects;
