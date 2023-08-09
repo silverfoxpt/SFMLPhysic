@@ -66,7 +66,7 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
 
         //settings
         sf::Vector2f startPos   = sf::Vector2f(400, -800); //old is sf::Vector2f(400, -700);
-        sf::Color color         = sf::Color::White;
+        sf::Color color         = sf::Color::Cyan;
         float lineSize          = 5;
         float lineLength        = 3; //old is 3
 
