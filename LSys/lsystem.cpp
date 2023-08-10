@@ -1,7 +1,7 @@
 #include "lsystem.h"
 
 LSystem::LSystem(int numInter, std::string startInstruction, std::map<char, std::string> updateMap, float angle,
-sf::Vector2f startPos, sf::Color color, float lineLength) {
+sf::Vector2f startPos, sf::Color color, float lineLength, float springCoeff, float springMaxRange) {
     this->numIter = numInter;
     this->startInstruction = startInstruction;
     this->updateMap = updateMap;
@@ -10,6 +10,9 @@ sf::Vector2f startPos, sf::Color color, float lineLength) {
     this->startPos = startPos;
     this->color = color;
     this->lineLength = lineLength;
+
+    this->springCoeff = springCoeff;
+    this->springMaxRange = springMaxRange;
 }
 
 void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager, Flowfield* flowfield) {
@@ -175,11 +178,11 @@ void LSystem::CreatePhysicTree() {
             int idxCounterAnchor = this->manager->AddNewControlledComponentReturnIdx(pCounterAnchor);      
 
             SpringConstraint anchorConstraint = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxAnchor),
-                Math::Distance(anchorPos, phy3.currentPosition), 3, 20); 
+                Math::Distance(anchorPos, phy3.currentPosition), this->springCoeff, this->springMaxRange); 
             anchorConstraint.display = false;
 
             SpringConstraint anchorConstraint2 = SpringConstraint(this->manager->GetControlledComponent(idx3), this->manager->GetControlledComponent(idxCounterAnchor),
-                Math::Distance(anchorCounterPos, phy3.currentPosition), 3, 20); 
+                Math::Distance(anchorCounterPos, phy3.currentPosition), this->springCoeff, this->springMaxRange); 
             anchorConstraint2.display = false;
 
             this->manager->addSpringConstraint(anchorConstraint);

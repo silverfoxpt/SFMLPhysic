@@ -31,6 +31,8 @@ class Flowfield: Monobehaviour<sf::RenderWindow*> {
         int col;
 
         int cellSize = 10;
+        float strengthCoeff = 0.25f;
+        float fieldSpacingCoeff = 0.05f;
 
         //used vars
         std::vector<std::vector<float>> angleValues;

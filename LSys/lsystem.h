@@ -37,7 +37,8 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
         Flowfield* flowfield;
 
         LSystem(int numInter, std::string startInstruction, std::map<char, std::string> updateMap, float angle,
-            sf::Vector2f startPos, sf::Color color, float lineLength);
+            sf::Vector2f startPos, sf::Color color, float lineLength, 
+            float springCoeff, float springMaxRange);
 
         //used vars
         //settings
@@ -72,6 +73,10 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
         sf::Color color         = sf::Color::Cyan;
         float lineSize          = 5;
         float lineLength        = 3; //old is 3
+
+        //springs settings
+        float springCoeff = 3;
+        float springMaxRange = 20;
 
         //move
         sf::Vector2f dir        = Math::getUpVec();

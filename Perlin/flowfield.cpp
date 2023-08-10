@@ -16,7 +16,7 @@ void Flowfield::Initialize(sf::RenderWindow* window) {
         this->angleValues.push_back(std::vector<float>());
         for (int j = 0; j < col; j++) {
             //calculate angle
-            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * 0.02, (j + this->clock.getElapsedTime().asSeconds()) * 0.02);
+            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * this->fieldSpacingCoeff, (j + this->clock.getElapsedTime().asSeconds()) * this->fieldSpacingCoeff);
             angle += 1; //range from 0 -> 2
             angle *= 180; //range from 0 -> 360
 
@@ -32,7 +32,7 @@ void Flowfield::Update(sf::Event event) {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             //calculate angle
-            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * 0.02, (j + this->clock.getElapsedTime().asSeconds()) * 0.02);
+            float angle = this->noise.noise((i + this->clock.getElapsedTime().asSeconds())  * this->fieldSpacingCoeff, (j + this->clock.getElapsedTime().asSeconds()) * this->fieldSpacingCoeff);
             angle += 1; //range from 0 -> 2
             angle *= 180; //range from 0 -> 360
 
@@ -99,5 +99,7 @@ sf::Vector2f Flowfield::getForceFromPos(float x, float y) {
 
     //calculate strength
     float strength = (noise.noise1D(this->clock.getElapsedTime().asSeconds() * 0.5) + 1) / 2; // rane from 0 -> 1
+    strength *= this->strengthCoeff;
+
     return dir * strength;
 }
