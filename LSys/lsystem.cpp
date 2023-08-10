@@ -1,5 +1,17 @@
 #include "lsystem.h"
 
+LSystem::LSystem(int numInter, std::string startInstruction, std::map<char, std::string> updateMap, float angle,
+sf::Vector2f startPos, sf::Color color, float lineLength) {
+    this->numIter = numInter;
+    this->startInstruction = startInstruction;
+    this->updateMap = updateMap;
+    this->angle = angle;
+
+    this->startPos = startPos;
+    this->color = color;
+    this->lineLength = lineLength;
+}
+
 void LSystem::Initialize(sf::RenderWindow* window, PhysicManager* physicManager, Flowfield* flowfield) {
     this->window = window;
     this->manager = physicManager;
@@ -133,7 +145,7 @@ void LSystem::CreatePhysicTree() {
         AbsoluteConstraint c2 = AbsoluteConstraint(this->manager->GetControlledComponent(idx2), this->manager->GetControlledComponent(idx3), 
             this->lineLength / 2.0); c2.display = false;*/
         AbsoluteConstraint c3 = AbsoluteConstraint(this->manager->GetControlledComponent(idx1), this->manager->GetControlledComponent(idx3), 
-            this->lineLength);
+            this->lineLength, this->color);
         c3.display = true;
 
         //this->manager->addAbsoluteConstraint(c1);

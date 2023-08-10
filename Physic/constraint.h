@@ -29,6 +29,7 @@ class AbsoluteConstraint: Monobehaviour<sf::RenderWindow*> {
         PhysicPoint* p2;
         float dis;
         bool display = true;
+        sf::Color color;
 
         void Initialize(sf::RenderWindow* window) override;
         void Update(sf::Event event) override;
@@ -36,7 +37,7 @@ class AbsoluteConstraint: Monobehaviour<sf::RenderWindow*> {
         void LateUpdate() override;
         void Reset() override;
 
-        AbsoluteConstraint(PhysicPoint* p1, PhysicPoint* p2, float dis);
+        AbsoluteConstraint(PhysicPoint* p1, PhysicPoint* p2, float dis, sf::Color color = sf::Color::Green);
 
     private:
         float p1MassPortion, p2MassPortion;

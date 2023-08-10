@@ -36,6 +36,9 @@ class LSystem: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
         PhysicManager* manager;
         Flowfield* flowfield;
 
+        LSystem(int numInter, std::string startInstruction, std::map<char, std::string> updateMap, float angle,
+            sf::Vector2f startPos, sf::Color color, float lineLength);
+
         //used vars
         //settings
         int numIter         = 6; //old is 6

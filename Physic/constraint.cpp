@@ -1,8 +1,9 @@
 #include "constraint.h"
 
-AbsoluteConstraint::AbsoluteConstraint(PhysicPoint* p1, PhysicPoint* p2, float dis) {
+AbsoluteConstraint::AbsoluteConstraint(PhysicPoint* p1, PhysicPoint* p2, float dis, sf::Color color) {
     this->p1 = p1;
     this->p2 = p2;
+    this->color = color;
     if (p1 == nullptr || p2 == nullptr) {std::cout << "Error: point don't exist!"; return;}
 
     this->dis = dis;
@@ -47,7 +48,7 @@ void AbsoluteConstraint::Visualize(sf::Event event) {
     if (display) {
         DrawUtils::drawLine(this->window, 
             GameManager::convertWorldToScreen(this->p1->currentPosition), 
-            GameManager::convertWorldToScreen(this->p2->currentPosition), sf::Color::Green, 
+            GameManager::convertWorldToScreen(this->p2->currentPosition), this->color, 
             3.0);
     }
 }
