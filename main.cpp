@@ -157,7 +157,7 @@ int main()
     {
         MainGameLoop();  
 
-        std::cout << 1.0 / deltaTime.getElapsedTime().asSeconds() << '\n';
+        //std::cout << 1.0 / deltaTime.getElapsedTime().asSeconds() << '\n';
         deltaTime.restart();
     }
 

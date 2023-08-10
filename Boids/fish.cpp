@@ -4,7 +4,7 @@ void Fish::Initialize(sf::RenderWindow* window) {
     this->window = window;
 
     //create stuffs
-    this->gameObject = GameobjectManager::GetInstance()->AddNewControlledComponent(GameObject(5, 10));
+    this->gameObject = GameobjectManager::GetInstance()->AddNewControlledComponent(GameObject(7, 14));
     this->gameObject->SetWorldPosition(sf::Vector2f(400, -400));
     this->gameObject->SetColor(sf::Color::Red);
 

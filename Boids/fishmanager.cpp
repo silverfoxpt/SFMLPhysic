@@ -5,7 +5,7 @@ FishManager* FishManager::instance = nullptr;
 void FishManager::Initialize(sf::RenderWindow* window) {
     this->window = window;
     this->fishes.reserve(100000);
-    //this->SpawnFish();
+    this->SpawnFish();
 }
 
 void FishManager::Update(sf::Event event) {
@@ -13,7 +13,8 @@ void FishManager::Update(sf::Event event) {
     this->Alignment();
     this->Cohesion();
     
-    this->TurnOnEdge();
+    //this->TurnOnEdge();
+    this->WarpOnEdge();
     this->LimitVelocity();
 }
 
@@ -32,9 +33,19 @@ void FishManager::Reset() {
 }
 
 void FishManager::SpawnFish() {
+    if (loadFile) {
+        if (!tex.loadFromFile("Pic/fish2.png")) {
+            std::cout << "File not loaded!" << '\n';
+        }
+    }
+
     for (int i = 0; i < this->numFish; i++) {
         Fish newFish = Fish();
         newFish.Initialize(this->window);
+        if (loadFile) {
+            newFish.gameObject->SetTexture(&this->tex);
+            newFish.gameObject->SetColor(sf::Color::White);
+        }
 
         this->fishes.push_back(newFish);
         this->fishObjects.push_back(this->fishes[i].gameObject);
@@ -142,5 +153,29 @@ void FishManager::LimitVelocity() {
         float len = Math::Length(velo); len = Math::clamp(this->minVelocity, this->maxVelocity, len);
 
         phys->velocity = Math::normalizeVec(velo) * len;
+    }
+}
+
+void FishManager::WarpOnEdge() {
+    for (int i = 0; i < (int) this->fishes.size(); i++) {
+        auto fish = this->fishObjects[i];
+        auto phys = this->fishPhysics[i];
+
+        auto pos = fish->GetWorldPosition();
+
+        if (pos.x < this->leftMargin) {
+            pos.x = this->rightMargin - 1; // Warp to the right side
+        } else if (pos.x > this->rightMargin) {
+            pos.x = this->leftMargin + 1; // Warp to the left side
+        }
+
+        if (pos.y > this->topMargin) {
+            pos.y = this->bottomMargin + 1; // Warp to the bottom
+        } else if (pos.y < this->bottomMargin) {
+            pos.y = this->topMargin - 1; // Warp to the top
+        }
+
+        phys->currentPosition = pos;
+        fish->SetWorldPosition(pos);
     }
 }

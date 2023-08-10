@@ -27,27 +27,31 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         sf::RenderWindow* window;
 
         //used vars
-        int numFish = 250;
+        int numFish = 500;
 
         std::vector<Fish> fishes;
         std::vector<GameObject*> fishObjects;
         std::vector<PhysicPoint*> fishPhysics;
 
+        //file load settings
+        bool loadFile = true;
+        sf::Texture tex;
+
         //settings
         float avoidFactor = 0.12f;
-        float matchingFactor = 0.007f;
+        float matchingFactor = 0.02f;
         float centeringFactor = 0.0005f;
 
         float protectedRange = 8;
         float visualRange = 40;
 
-        float minVelocity = 10; //test
-        float maxVelocity = 20; //test
+        float minVelocity = 40; //test
+        float maxVelocity = 60; //test
 
-        float leftMargin = 100;
-        float rightMargin = /*GameManager::mainWindowSize.x - leftMargin*/ 700;
-        float topMargin = -100;
-        float bottomMargin = /*-(GameManager::mainWindowSize.y - topMargin)*/ -700; 
+        float leftMargin = 0;
+        float rightMargin = /*GameManager::mainWindowSize.x - leftMargin*/ 800;
+        float topMargin = -0;
+        float bottomMargin = /*-(GameManager::mainWindowSize.y - topMargin)*/ -800; 
 
         float turnFactor = 0.2f;
 
@@ -83,6 +87,8 @@ class FishManager: Monobehaviour<sf::RenderWindow*> {
         void Cohesion();
         void TurnOnEdge();
         void LimitVelocity();
+
+        void WarpOnEdge();
 };
 
 #endif
