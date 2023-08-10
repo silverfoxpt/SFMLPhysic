@@ -14,13 +14,16 @@
 
 #include "lsystem.h"
 
-class LSystemManager: Monobehaviour<sf::RenderWindow*> {
+class LSystemManager: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield*> {
     public:
         sf::RenderWindow* window;
+        PhysicManager* physicManager;
+        Flowfield* flowfield;
 
         //used vars
+        std::vector<LSystem> lsystems;
 
-        void Initialize(sf::RenderWindow* window) override;
+        void Initialize(sf::RenderWindow* window, PhysicManager* physicManager, Flowfield* flowfield) override;
         void Update(sf::Event event) override;
         void Visualize(sf::Event event) override;
         void LateUpdate() override;
@@ -35,6 +38,8 @@ class LSystemManager: Monobehaviour<sf::RenderWindow*> {
 
     private:
         static LSystemManager* instance;
+
+        void TestAddLSystems();
 };
 
 #endif

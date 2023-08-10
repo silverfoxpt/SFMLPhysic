@@ -15,7 +15,7 @@
 
 #include "Physic/physicmanager.h"
 
-#include "LSys/lsystem.h"
+#include "LSys/lsysmanager.h"
 
 #include "Perlin/flowfield.h"
 
@@ -33,7 +33,7 @@ sf::Clock deltaTime;
 
 //GameobjectManager gameobjectManager;
 //PhysicManager physicManager;
-LSystem lsystem;
+//LSystem lsystem;
 Flowfield flowfield;
 
 //static vars
@@ -73,8 +73,9 @@ void Initialize() {
     GameobjectManager::GetInstance()->Initialize(&window);
     PhysicManager::GetInstance()->Initialize(&window);
     flowfield.Initialize(&window);
-    lsystem.Initialize(&window, PhysicManager::GetInstance(), &flowfield);
+    //lsystem.Initialize(&window, PhysicManager::GetInstance(), &flowfield);
     FishManager::GetInstance()->Initialize(&window);
+    LSystemManager::GetInstance()->Initialize(&window, PhysicManager::GetInstance(), &flowfield);
 
     LateTest();
 }
@@ -84,9 +85,10 @@ void Update(sf::Event event) {
 
     GameobjectManager::GetInstance()->Update(event);
     PhysicManager::GetInstance()->Update(event);
-    lsystem.Update(event);
+    //lsystem.Update(event);
     flowfield.Update(event);
     FishManager::GetInstance()->Update(event);
+    LSystemManager::GetInstance()->Update(event);
 }
 
 void Visualize(sf::Event event) {
@@ -94,25 +96,28 @@ void Visualize(sf::Event event) {
 
     GameobjectManager::GetInstance()->Visualize(event);
     PhysicManager::GetInstance()->Visualize(event);
-    lsystem.Visualize(event);
+    //lsystem.Visualize(event);
     flowfield.Visualize(event);
     FishManager::GetInstance()->Visualize(event);
+    LSystemManager::GetInstance()->Visualize(event);
 }
 
 void LateUpdate() {
     GameobjectManager::GetInstance()->LateUpdate();
     PhysicManager::GetInstance()->LateUpdate();
-    lsystem.LateUpdate();
+    //lsystem.LateUpdate();
     flowfield.LateUpdate();
     FishManager::GetInstance()->LateUpdate();
+    LSystemManager::GetInstance()->LateUpdate();
 }
 
 void Reset() {
     GameobjectManager::GetInstance()->Reset();
     PhysicManager::GetInstance()->Reset();
-    lsystem.Reset();
+    //lsystem.Reset();
     flowfield.Reset();
     FishManager::GetInstance()->Reset();
+    LSystemManager::GetInstance()->Reset();
 }
 
 void MainGameLoop() {
@@ -127,7 +132,7 @@ void MainGameLoop() {
             window.close();
     }
     //ImGui::SFML::Update(window, deltaTime.restart());
-    window.clear();
+    window.clear(sf::Color(48,56,129));
 
     //doin stuff zone
     Update(event);
