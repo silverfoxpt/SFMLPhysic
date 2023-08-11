@@ -16,8 +16,7 @@ void Fish::Initialize(sf::RenderWindow* window) {
 }
 
 void Fish::Update(sf::Event event) {
-    //test
-    //
+    
 }
 
 void Fish::Visualize(sf::Event event) {
