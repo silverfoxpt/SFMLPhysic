@@ -40,6 +40,7 @@ class LSystemManager: Monobehaviour<sf::RenderWindow*, PhysicManager*, Flowfield
         static LSystemManager* instance;
 
         void TestAddLSystems();
+        void TestAddLSystemVideo();
 };
 
 #endif

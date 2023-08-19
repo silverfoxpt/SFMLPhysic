@@ -71,7 +71,7 @@ void UpdateTest(sf::Event event) {
 
     shader.setUniform("u_resolution", sf::Glsl::Vec2{ window.getSize() });
     shader.setUniform("u_time", shaderTime.getElapsedTime().asSeconds());
-    window.draw(shape, &shader);
+    //window.draw(shape, &shader);
 }
 
 void VisualizeTest(sf::Event event) {
@@ -146,7 +146,9 @@ void MainGameLoop() {
             window.close();
     }
     //ImGui::SFML::Update(window, deltaTime.restart());
-    window.clear(sf::Color(48,56,129));
+    
+    window.clear(sf::Color(48,56,129)); //ocean
+    //window.clear(sf::Color(0,0,0)); //black
 
     //doin stuff zone
     Update(event);

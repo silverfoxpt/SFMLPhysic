@@ -9,6 +9,7 @@ void LSystemManager::Initialize(sf::RenderWindow* window, PhysicManager* physicM
 
     //add trees
     this->TestAddLSystems();
+    //this->TestAddLSystemVideo();
 }
 
 void LSystemManager::Update(sf::Event event) {
@@ -27,6 +28,12 @@ void LSystemManager::LateUpdate() {
 
 void LSystemManager::Reset() {
 
+}
+
+void LSystemManager::TestAddLSystemVideo() {
+    LSystem test1(6, "X", {{'X', "F+[[X]-X]-F[-FX]+X"}, {'F', "FF"}}, 25, sf::Vector2f(400, -800), sf::Color(0, 255, 0), 3, 3, 20);
+    test1.Initialize(this->window, this->physicManager, this->flowfield);
+    this->lsystems.push_back(test1);
 }
 
 void LSystemManager::TestAddLSystems() {
