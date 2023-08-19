@@ -48,8 +48,17 @@ sf::Vector2u GameManager::originalResolution    = sf::Vector2u(1920, 1080);
 GameObject test = GameObject(10, 10);
 Fish fish;
 
+sf::Shader shader;
+sf::RectangleShape shape;
+sf::Clock shaderTime;
+
 void Test() {
     //DO NOT PUT ANYTHING THAT NEEDS TO BE INITIALIZED BEFOREHAND IN THIS FUNCTION. TEST UNRELATED SIMPLE FUNCTIONS ONLY
+    if (!shader.loadFromFile("Shaders/water.frag", sf::Shader::Fragment))
+    {
+        std::cerr << "Couldn't load fragment shader\n";
+    }
+    shape = sf::RectangleShape{ sf::Vector2f{ window.getSize() } };
 }
 
 void LateTest() {
@@ -59,6 +68,10 @@ void LateTest() {
 void UpdateTest(sf::Event event) {
     //fish.physicPoint->AddForce(sf::Vector2f(0.01, 0));
     //fish.gameObject->GetComponent<PhysicPoint>()->AddForce(sf::Vector2f(0.01, 0));
+
+    shader.setUniform("u_resolution", sf::Glsl::Vec2{ window.getSize() });
+    shader.setUniform("u_time", shaderTime.getElapsedTime().asSeconds());
+    window.draw(shape, &shader);
 }
 
 void VisualizeTest(sf::Event event) {
@@ -98,8 +111,9 @@ void Visualize(sf::Event event) {
     PhysicManager::GetInstance()->Visualize(event);
     //lsystem.Visualize(event);
     flowfield.Visualize(event);
-    FishManager::GetInstance()->Visualize(event);
+
     LSystemManager::GetInstance()->Visualize(event);
+    FishManager::GetInstance()->Visualize(event);
 }
 
 void LateUpdate() {
